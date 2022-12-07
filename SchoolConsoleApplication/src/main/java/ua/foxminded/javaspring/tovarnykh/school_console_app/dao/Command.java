@@ -8,6 +8,6 @@ abstract class Command {
     protected static final String USER_NAME = "guest";
     protected static final String PASSWORD = "foxminded";
     
-    abstract void execute() throws SQLException;
+    abstract public void execute() throws SQLException;
 
 }
