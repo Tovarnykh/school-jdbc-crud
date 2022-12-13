@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
 
-public class InsertRandomData extends Command {
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.ConnectionAspect;
+
+public class InsertRandomData implements Command {
 
     private Random random = new Random();
     private List<String> groups = new ArrayList<>();
@@ -40,7 +42,7 @@ public class InsertRandomData extends Command {
 
     private void insertGroups() {
         groups.forEach(groupName -> {
-            try (Connection connection = DriverManager.getConnection(JDBC_DRIVER, USER_NAME, PASSWORD);
+            try (Connection connection = ConnectionAspect.getConnection();
                     PreparedStatement statement = connection.prepareStatement(GROUPS_SCRIPT);) {
                 statement.setString(1, groupName);
                 statement.executeUpdate();
@@ -68,7 +70,7 @@ public class InsertRandomData extends Command {
 
     private void insertCourses() {
         COURSES.forEach(course -> {
-            try (Connection connection = DriverManager.getConnection(JDBC_DRIVER, USER_NAME, PASSWORD);
+            try (Connection connection = ConnectionAspect.getConnection();
                     PreparedStatement statement = connection.prepareStatement(COURSES_SCRIPT);) {
                 statement.setString(1, course);
                 statement.executeUpdate();
@@ -80,7 +82,7 @@ public class InsertRandomData extends Command {
     
     private void insertStudents() {
         for(int i =0; i<200; i++) {
-            try (Connection connection = DriverManager.getConnection(JDBC_DRIVER, USER_NAME, PASSWORD);
+            try (Connection connection = ConnectionAspect.getConnection();
                     PreparedStatement statement = connection.prepareStatement(STUDENTS_SCRIPT);) {
                 statement.setInt(1, random.nextInt(groups.size())+1);
                 statement.setString(2, FIRST_NAMES.stream()
