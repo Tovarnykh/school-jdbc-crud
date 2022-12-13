@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.List;
 import org.apache.ibatis.jdbc.ScriptRunner;
 
@@ -16,22 +15,20 @@ import java.sql.SQLException;
 
 public class InitializeDatabase implements Command {
 
-    private static final String CREATE_TABLE_GROUPS = "createTableGroups.sql";
-    private static final String CREATE_TABLE_STUDENTS = "createTableStudents.sql";
-    private static final String CREATE_TABLE_COURSES = "createTableCourses.sql";
-
-    List<String> scripts = List.of(CREATE_TABLE_GROUPS, CREATE_TABLE_COURSES, CREATE_TABLE_STUDENTS);
+    List<String> executableScripts = List.of("createTableGroups.sql", "createTableStudents.sql",
+            "createTableCourses.sql", "createTableStudents_Courses.sql");
 
     @Override
     public void execute() throws SQLException {
-        scripts.forEach(script -> {
+        executableScripts.forEach(script -> {
             try (Connection connection = ConnectionAspect.getConnection();
                     Reader reader = new BufferedReader(new FileReader(
                             Thread.currentThread().getContextClassLoader().getResource("").getPath() + script));) {
 
                 ScriptRunner scriptRunner = new ScriptRunner(connection);
+                scriptRunner.setLogWriter(null);
                 scriptRunner.runScript(reader);
-
+                
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (FileNotFoundException e) {
