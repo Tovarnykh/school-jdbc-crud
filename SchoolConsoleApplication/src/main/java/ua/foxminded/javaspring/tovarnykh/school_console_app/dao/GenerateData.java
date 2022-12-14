@@ -6,8 +6,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -119,12 +121,13 @@ public class GenerateData implements Command {
             StringBuilder query = new StringBuilder();
             StringBuilder uniqueQuery = new StringBuilder();
             Set<String> uniqueSet = new HashSet<>();
+            Map<Integer, Integer> coursesCount = Map.of(1, 0, 2, 0, 3, 0, 4, 0, 5, 0, 6, 0, 7, 0, 8, 0, 9, 0, 10, 0);
 
             Stream.iterate(1, n -> n + 1).limit(STUDENTS_TO_GENERATE).forEachOrdered(
                     studentId -> Stream.iterate(1, n -> n + 1).limit(random.nextInt(0, 4)).forEach(courseId -> {
                         try {
                             preparedStatement.setInt(1, studentId);
-                            preparedStatement.setInt(2, random.nextInt(1, 4));
+                            preparedStatement.setInt(2, random.nextInt(1, 11));
                             query.append(preparedStatement.toString() + ";\n");
                             preparedStatement.clearParameters();
                         } catch (SQLException e) {

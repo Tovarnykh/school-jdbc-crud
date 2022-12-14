@@ -28,7 +28,6 @@ public class InitializeDatabase implements Command {
                 ScriptRunner scriptRunner = new ScriptRunner(connection);
                 scriptRunner.setLogWriter(null);
                 scriptRunner.runScript(reader);
-                
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (FileNotFoundException e) {
@@ -37,6 +36,7 @@ public class InitializeDatabase implements Command {
                 System.out.println("Cant open Reader class.");
             }
         });
+        new GenerateData().execute();
     }
 
 }

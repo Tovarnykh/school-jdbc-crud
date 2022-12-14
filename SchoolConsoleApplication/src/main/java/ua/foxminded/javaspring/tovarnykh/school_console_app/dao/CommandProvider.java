@@ -5,7 +5,7 @@ import java.util.List;
 
 public class CommandProvider {
 
-    private static List<Command> commands = List.of(new InitializeDatabase(), new GenerateData());
+    private static List<Command> commands = List.of(new InitializeDatabase());
 
     public static void executeCommand(int commandNumber) throws SQLException {
         commands.get(commandNumber).execute();
