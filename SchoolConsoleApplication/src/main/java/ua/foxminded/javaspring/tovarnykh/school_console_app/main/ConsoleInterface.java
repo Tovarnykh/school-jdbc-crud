@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.CommandProvider;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.DatabaseProperties;
 
 public class ConsoleInterface {
 
@@ -42,13 +43,15 @@ public class ConsoleInterface {
 
     }
 
-    public void drawFindGroupsInterface() {
+    public void drawFindGroupsInterface() throws SQLException {
         System.out.print("""
                 ╔════════════════════════════════════════╗
                 ║Insert a students` number to find groups║
                 ╟────────────────────────────────────────╢
                  in:""");
-        System.out.print(" out:/n" + in.nextInt() + """
+        DatabaseProperties.querryNumber = in.nextInt();
+        CommandProvider.executeCommand(1);
+        System.out.print("""
 
                 ╚════════════════════════════════════════╝
                 """);

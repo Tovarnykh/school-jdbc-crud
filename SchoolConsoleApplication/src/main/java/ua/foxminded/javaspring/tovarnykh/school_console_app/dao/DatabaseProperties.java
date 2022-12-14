@@ -8,6 +8,8 @@ import java.util.Properties;
 public class DatabaseProperties {
 
     private static final Properties DATABASE_PROPERTIES = new Properties();
+    
+    public static int querryNumber = 0;
 
     public static String getDriver() {
         return DATABASE_PROPERTIES.getProperty("driver");
