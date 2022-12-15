@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.tovarnykh.school_console_app.dao;
+package ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,11 +37,12 @@ public class GenerateData implements Command {
             "Thomas", "Taylor", "Moore", "Jackson", "Martin");
 
     @Override
-    public void execute() throws SQLException {
+    public String execute() throws SQLException {
         insertGroups();
         insertCourses();
         insertStudents();
         insertStudentsCourses();
+        return "true";
     }
 
     private void insertGroups() throws SQLException {
@@ -124,7 +125,7 @@ public class GenerateData implements Command {
                     studentId -> Stream.iterate(1, n -> n + 1).limit(random.nextInt(0, 4)).forEach(courseId -> {
                         try {
                             preparedStatement.setInt(1, studentId);
-                            preparedStatement.setInt(2, random.nextInt(1,11));
+                            preparedStatement.setInt(2, random.nextInt(1, 11));
                             query.append(preparedStatement.toString() + ";\n");
                             preparedStatement.clearParameters();
                         } catch (SQLException e) {

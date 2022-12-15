@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.tovarnykh.school_console_app.dao;
+package ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -19,7 +19,7 @@ public class InitializeDatabase implements Command {
             "createTableCourses.sql", "createTableStudents_Courses.sql");
 
     @Override
-    public void execute() throws SQLException {
+    public String execute() throws SQLException {
         executableScripts.forEach(script -> {
             try (Connection connection = ConnectionAspect.getConnection();
                     Reader reader = new BufferedReader(new FileReader(
@@ -37,6 +37,7 @@ public class InitializeDatabase implements Command {
             }
         });
         new GenerateData().execute();
+        return "true";
     }
 
 }
