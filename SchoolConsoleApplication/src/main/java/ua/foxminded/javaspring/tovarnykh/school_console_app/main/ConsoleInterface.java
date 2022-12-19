@@ -5,16 +5,60 @@ import java.util.Scanner;
 
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.CommandProvider;
 
+/**
+ *
+ * @author Victor Tovarnykh
+ * @version 0.15.0
+ * @since 0.1.0
+ */
 public class ConsoleInterface {
 
-    public static Scanner in;
-    private static final String EXIT = "exit";
+    public static final String SEPARATOR = " -----------------------------------------\n";
 
+    private static final String EXIT = "exit";
+    private static final Scanner in = new Scanner(System.in);
+
+    /**
+     * Method name: ConsoleInterface
+     *
+     * Constructor that generates database before user can interact with it.
+     */
     public ConsoleInterface() throws SQLException {
-        in = new Scanner(System.in);
         CommandProvider.executeCommand(0);
     }
 
+    /**
+     * Method name: readLine
+     *
+     * @return (String) Read line. Inside the function: Read console line.
+     */
+    public static String readLine() {
+        System.out.print(">");
+        return ConsoleInterface.in.nextLine();
+
+    }
+
+    /**
+     * Method name: readNumber
+     *
+     * @return (String) Read line. Inside the function: Reading console line, if
+     *         it`s not a number repeat cycle.
+     */
+    public static int readNumber() {
+        String input;
+        do {
+            System.out.print(">");
+            input = ConsoleInterface.in.nextLine();
+        } while (input.chars().noneMatch(Character::isDigit));
+        return Integer.parseInt(input);
+    }
+
+    /**
+     * Method name: exerciseChooser
+     * @throws SQLException
+     *
+     * Inside the function: 1. Print Interface and call methods by chosen number.
+     */
     public void exerciseChooser() throws SQLException {
         String choice;
 
@@ -36,9 +80,9 @@ public class ConsoleInterface {
                     ║                                         ║
                     ║exit - to Exit                           ║
                     ╚═════════════════════════════════════════╝
-                     >""");
+                    """);
 
-            choice = in.nextLine();
+            choice = readLine();
             if (EXIT.equalsIgnoreCase(choice)) {
                 break;
             } else if (choice.equals("1")) {
@@ -58,41 +102,65 @@ public class ConsoleInterface {
 
     }
 
+    /**
+     * Method name: drawFindGroupsInterface
+     * @throws SQLException
+     *
+     * Inside the function: 1. Print Interface and call command to interact with
+     * database.
+     */
     public void drawFindGroupsInterface() throws SQLException {
         System.out.print("""
                 ╔════════════════════════════════════════╗
                 ║Insert a number of students` to find    ║
                 ║courses.                                ║
                 ╟────────────────────────────────────────╢
-                 in:""");
+                 in:
+                 """);
         System.out.println(CommandProvider.executeCommand(1) + """
                 ╚════════════════════════════════════════╝
                 Enter any key to continue...
                 """);
-        in.nextLine();
+        readLine();
     }
 
+    /**
+     * Method name: drawFindStudentsInterface
+     * @throws SQLException
+     *
+     * Inside the function: 1. Print Interface and call command to interact with
+     * database.
+     */
     public void drawFindStudentsInterface() throws SQLException {
         System.out.print("""
                 ╔══════════════════════════════════════════╗
                 ║Insert a course name to find it`s students║
                 ╟──────────────────────────────────────────╢
-                 in:""");
+                 in:
+                 """);
         System.out.println(CommandProvider.executeCommand(2) + """
                 ╚══════════════════════════════════════════╝
                 Enter any key to continue...
                 """);
-        in.nextLine();
+        readLine();
     }
 
+    /**
+     * Method name: drawAddStudentsInterface
+     * @throws SQLException
+     *
+     * Inside the function: 1. Print Interface and call command to interact with
+     * database.
+     */
     public void drawAddStudentsInterface() throws SQLException {
         System.out.print("""
                 ╔══════════════════════════════════════════╗
                 ║Insert: group id, first name and last_name║
                 ║              to add student.             ║
                 ╟──────────────────────────────────────────╢
-                 in:""");
-        if (Boolean.parseBoolean(CommandProvider.executeCommand(3)) == true) {
+                 in:
+                 """);
+        if (Boolean.parseBoolean(CommandProvider.executeCommand(3))) {
             System.out.println("\tStudent succsesfully added!");
         } else {
             System.out.println("There was a problem with adding student");
@@ -101,16 +169,24 @@ public class ConsoleInterface {
                 ╚══════════════════════════════════════════╝
                 Enter any key to continue...
                 """);
-        in.nextLine();
+        readLine();
     }
 
+    /**
+     * Method name: drawDeleteStudentsInterface
+     * @throws SQLException
+     *
+     * Inside the function: 1. Print Interface and call command to interact with
+     * database.
+     */
     public void drawDeleteStudentsInterface() throws SQLException {
         System.out.print("""
                 ╔══════════════════════════════════════════╗
                 ║        Insert student Id to delete       ║
                 ╟──────────────────────────────────────────╢
-                 in:""");
-        if (Boolean.parseBoolean(CommandProvider.executeCommand(4)) == true) {
+                 in:
+                 """);
+        if (Boolean.parseBoolean(CommandProvider.executeCommand(4))) {
             System.out.println("\tStudent succsesfully deleted!");
         } else {
             System.out.println("There was a problem with deleting student");
@@ -119,9 +195,16 @@ public class ConsoleInterface {
                 ╚══════════════════════════════════════════╝
                 Enter any key to continue...
                 """);
-        in.nextLine();
+        readLine();
     }
 
+    /**
+     * Method name: drawAddToCourseInterface
+     * @throws SQLException
+     *
+     * Inside the function: 1. Print Interface and call command to interact with
+     * database.
+     */
     public void drawAddToCourseInterface() throws SQLException {
         System.out.print("""
                 ╔══════════════════════════════════════════╗
@@ -130,7 +213,7 @@ public class ConsoleInterface {
                 ╟──────────────────────────────────────────╢
                  in:
                  """);
-        if (Boolean.parseBoolean(CommandProvider.executeCommand(5)) == true) {
+        if (Boolean.parseBoolean(CommandProvider.executeCommand(5))) {
             System.out.println("\tStudent succsesfully enrolled!");
         } else {
             System.out.println("There was a problem with enrolling student");
@@ -139,9 +222,16 @@ public class ConsoleInterface {
                 ╚══════════════════════════════════════════╝
                 Enter any key to continue...
                 """);
-        in.nextLine();
+        readLine();
     }
 
+    /**
+     * Method name: drawRemoveStudentInterface
+     * @throws SQLException
+     *
+     * Inside the function: 1. Print Interface and call command to interact with
+     * database.
+     */
     public void drawRemoveStudentInterface() throws SQLException {
         System.out.print("""
                 ╔══════════════════════════════════════════╗
@@ -150,7 +240,7 @@ public class ConsoleInterface {
                 ╟──────────────────────────────────────────╢
                  in:
                  """);
-        if (Boolean.parseBoolean(CommandProvider.executeCommand(6)) == true) {
+        if (Boolean.parseBoolean(CommandProvider.executeCommand(6))) {
             System.out.println("\tStudent succsesfully unenrolled!");
         } else {
             System.out.println("There was a problem with unenrolling student");
@@ -159,10 +249,9 @@ public class ConsoleInterface {
                 ╚══════════════════════════════════════════╝
                 Enter any key to continue...
                 """);
-        in.nextLine();
+        readLine();
     }
 
-    @Override
     protected void finalize() {
         in.close();
     }
