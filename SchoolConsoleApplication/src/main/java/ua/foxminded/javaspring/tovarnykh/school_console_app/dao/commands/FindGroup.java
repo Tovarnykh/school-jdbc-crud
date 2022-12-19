@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.ConnectionAspect;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.main.ConsoleInterface;
 
@@ -41,8 +39,7 @@ public class FindGroup implements Command {
         StringBuilder resultList = new StringBuilder();
 
         try (Connection connection = ConnectionAspect.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
-                Statement statement = connection.createStatement()) {
+                PreparedStatement preparedStatement = connection.prepareStatement(QUERY)) {
             int amountOfStudents = ConsoleInterface.readNumber();
 
             preparedStatement.setInt(1, amountOfStudents);

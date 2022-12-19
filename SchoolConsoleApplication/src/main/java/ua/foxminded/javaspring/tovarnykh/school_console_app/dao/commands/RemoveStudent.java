@@ -3,8 +3,6 @@ package ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
-
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.ConnectionAspect;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.main.ConsoleInterface;
 
@@ -33,8 +31,7 @@ public class RemoveStudent implements Command {
     @Override
     public String execute() throws SQLException {
         try (Connection connection = ConnectionAspect.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
-                Statement statement = connection.createStatement()) {
+                PreparedStatement preparedStatement = connection.prepareStatement(QUERY)) {
             int studentId = ConsoleInterface.readNumber();
             int groupId = ConsoleInterface.readNumber();
 

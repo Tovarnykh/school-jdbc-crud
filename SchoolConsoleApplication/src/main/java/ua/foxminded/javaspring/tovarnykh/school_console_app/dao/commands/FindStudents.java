@@ -4,17 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.ConnectionAspect;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.main.ConsoleInterface;
 
 /**
-*
-* @author Victor Tovarnykh
-* @version 0.15.0
-* @since 0.1.0
-*/
+ *
+ * @author Victor Tovarnykh
+ * @version 0.15.0
+ * @since 0.1.0
+ */
 public class FindStudents implements Command {
 
     private static final String QUERY = """
@@ -25,7 +23,7 @@ public class FindStudents implements Command {
             WHERE course_name = (?)
             ORDER BY first_name
             """;
-    
+
     /**
      * Method name: execute
      *
@@ -41,8 +39,7 @@ public class FindStudents implements Command {
         StringBuilder resultList = new StringBuilder();
 
         try (Connection connection = ConnectionAspect.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
-                Statement statement = connection.createStatement()) {
+                PreparedStatement preparedStatement = connection.prepareStatement(QUERY)) {
             String courseName = ConsoleInterface.readLine();
 
             preparedStatement.setString(1, courseName);

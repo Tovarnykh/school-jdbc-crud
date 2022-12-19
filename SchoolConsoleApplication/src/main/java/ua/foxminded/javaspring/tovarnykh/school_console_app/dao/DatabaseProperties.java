@@ -33,7 +33,7 @@ public class DatabaseProperties {
     public static String getUserName() {
         return DATABASE_PROPERTIES.getProperty("userName");
     }
-
+    
     /**
      * Method name: getPassword
      * @return (String) Received password.
@@ -42,6 +42,33 @@ public class DatabaseProperties {
      */
     public static String getPassword() {
         return DATABASE_PROPERTIES.getProperty("password");
+    }
+    
+    /**
+     * Method name: setDriver
+     *
+     *                      Inside the function: Set new driver in property file.
+     */
+    public static void setDriver(String newDriver) {
+        DATABASE_PROPERTIES.setProperty("driver", newDriver);
+    }
+    
+    /**
+     * Method name: setUserName
+     *
+     *                      Inside the function: Set new user name in property file.
+     */
+    public static void setUserName(String newUserName) {
+        DATABASE_PROPERTIES.setProperty("userName", newUserName);
+    }
+    
+    /**
+     * Method name: setPassword
+     *
+     *                      Inside the function: Set new password in property file.
+     */
+    public static void setPassword(String newPassword) {
+        DATABASE_PROPERTIES.setProperty("password", newPassword);
     }
 
     static {
