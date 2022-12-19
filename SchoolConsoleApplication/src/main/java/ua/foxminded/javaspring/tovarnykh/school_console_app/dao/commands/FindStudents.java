@@ -15,7 +15,7 @@ import ua.foxminded.javaspring.tovarnykh.school_console_app.main.ConsoleInterfac
  */
 public class FindStudents implements Command {
 
-    private static final String QUERY = """
+    public static final String QUERY = """
             SELECT CONCAT(first_name, ' ' , last_name) AS student
             FROM students_courses
             JOIN students ON students.student_id = students_courses.student_id

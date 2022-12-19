@@ -51,9 +51,48 @@ It consists of 6 tasks.
 
 **Solution**:
 
-
+This program executes SQL scripts from console inteface, and reads lists of answears to print them in propper format for user.
 
 **Compiling**:
+```
+╔═════════════════════════════════════════╗
+║ Welcome To School Console Application!  ║
+║   Choose command To Interact with DB    ║
+╠─────────────────────────────────────────╣
+║1 - Find all groups with                 ║
+║    less or equal students’ number.      ║
+║2 - Find all students related to         ║
+║    the course with the given name.      ║
+║3 - Add a new student.                   ║
+║4 - Delete a student.                    ║
+║5 - Add a list of students to the course.║
+║6 - Remove the student                   ║
+║    from one of their courses.           ║
+║                                         ║
+║exit - to Exit                           ║
+╚═════════════════════════════════════════╝
+>1
+╔════════════════════════════════════════╗
+║Insert a number of students` to find    ║
+║courses.                                ║
+╟────────────────────────────────────────╢
+ in:
+>25
+ -----------------------------------------
+ Course name          | Inscribed students 
+ -----------------------------------------
+ Art                  |          37 
+ Dance                |          39 
+ Handwriting          |          43 
+ Health               |          30 
+ Instrumental Music   |          36 
+ Language Arts        |          35 
+ Mathematics          |          36 
+ Music                |          46 
+ Physical Education   |          33 
+ Science              |          32 
+╚════════════════════════════════════════╝
+Enter any key to continue...
+```
 
-
-To launch the program **Java9+** requires.
+To launch the program **Java12+** requires.

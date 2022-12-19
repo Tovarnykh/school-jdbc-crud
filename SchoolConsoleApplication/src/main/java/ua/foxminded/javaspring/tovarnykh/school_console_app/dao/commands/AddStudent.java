@@ -14,7 +14,7 @@ import ua.foxminded.javaspring.tovarnykh.school_console_app.main.ConsoleInterfac
 */
 public class AddStudent implements Command {
 
-    private static final String QUERY = """
+    public static final String QUERY = """
             INSERT INTO students (group_id, first_name, last_name) VALUES (?, ?, ?)
             """;
 

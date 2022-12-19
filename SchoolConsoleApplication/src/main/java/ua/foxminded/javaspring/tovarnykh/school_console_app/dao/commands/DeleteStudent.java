@@ -14,7 +14,7 @@ import ua.foxminded.javaspring.tovarnykh.school_console_app.main.ConsoleInterfac
  */
 public class DeleteStudent implements Command {
 
-    private static final String QUERY = """
+    public static final String QUERY = """
             DELETE FROM students
             WHERE student_id = (?)
                         """;

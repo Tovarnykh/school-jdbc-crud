@@ -13,7 +13,7 @@ import ua.foxminded.javaspring.tovarnykh.school_console_app.main.ConsoleInterfac
 */
 public class RemoveStudent implements Command {
 
-    private static final String QUERY = """
+    public static final String QUERY = """
             DELETE FROM students_courses
             WHERE student_id = (?) AND course_id = (?)
             """;
