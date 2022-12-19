@@ -2,9 +2,9 @@ package ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.util.List;
 import org.apache.ibatis.jdbc.ScriptRunner;
@@ -36,8 +36,8 @@ public class InitializeDatabase implements Command {
     public String execute() throws SQLException {
         executableScripts.forEach(script -> {
             try (Connection connection = ConnectionAspect.getConnection();
-                    Reader reader = new BufferedReader(new FileReader(
-                            Thread.currentThread().getContextClassLoader().getResource(script).getPath()));) {
+                    InputStream inputSream = getClass().getResourceAsStream("/"+script);
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputSream));) {
                 ScriptRunner scriptRunner = new ScriptRunner(connection);
 
                 scriptRunner.setLogWriter(null);

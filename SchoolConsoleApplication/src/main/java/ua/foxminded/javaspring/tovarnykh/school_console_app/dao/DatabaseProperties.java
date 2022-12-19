@@ -1,7 +1,7 @@
 package ua.foxminded.javaspring.tovarnykh.school_console_app.dao;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
@@ -73,9 +73,8 @@ public class DatabaseProperties {
 
     static {
         try {
-            String path = Thread.currentThread().getContextClassLoader().getResource("databaseProperties.xml")
-                    .getPath();
-            DATABASE_PROPERTIES.loadFromXML(new FileInputStream(path));
+            InputStream inputStream = DatabaseProperties.class.getClassLoader().getResourceAsStream("databaseProperties.xml");
+            DATABASE_PROPERTIES.loadFromXML(inputStream);
         } catch (InvalidPropertiesFormatException e) {
             System.out.println("There is a problem with a property format wich trying to recieve.");
         } catch (IOException e) {
