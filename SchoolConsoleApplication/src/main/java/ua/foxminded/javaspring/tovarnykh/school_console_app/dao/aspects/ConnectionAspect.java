@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.DatabaseProperties;
-
 /**
 *
 * @author Victor Tovarnykh

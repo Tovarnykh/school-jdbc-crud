@@ -13,9 +13,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.CommandProvider;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.DatabaseProperties;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.ConnectionAspect;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.DatabaseProperties;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.AddStudent;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.Commands;
 
 class AddStudentTest {
 
@@ -25,10 +26,11 @@ class AddStudentTest {
     static void setUp() {
         try {
             Class.forName("org.h2.Driver");
-            DatabaseProperties.setDriver("jdbc:h2:mem:testdb");
+            DatabaseProperties.readPropertyFile("testDatabaseProperties.properties");
             conn = DriverManager.getConnection(DatabaseProperties.getDriver(), DatabaseProperties.getUserName(),
                     DatabaseProperties.getPassword());
-            CommandProvider.executeCommand(0);
+            CommandProvider.executeCommand(Commands.INIT);
+            CommandProvider.executeCommand(Commands.GENERATE);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -38,7 +40,6 @@ class AddStudentTest {
     @AfterAll
     static void tearDownAfterClass() throws Exception {
         conn.close();
-        DatabaseProperties.setDriver("jdbc:postgresql://localhost:5432/school");
     }
 
     @Test

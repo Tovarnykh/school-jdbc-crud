@@ -35,12 +35,11 @@ public class FindStudents implements Command {
      *                      Receive answer from database.
      */
     @Override
-    public String execute() throws SQLException {
-        StringBuilder resultList = new StringBuilder();
-
+    public void execute() throws SQLException {
         try (Connection connection = ConnectionAspect.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(QUERY)) {
             String courseName = ConsoleInterface.readLine();
+            StringBuilder resultList = new StringBuilder();
 
             preparedStatement.setString(1, courseName);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -50,7 +49,7 @@ public class FindStudents implements Command {
             while (resultSet.next()) {
                 resultList.append(String.format(" %28s%n", resultSet.getString("student")));
             }
-            return resultList.toString();
+            System.out.println(resultList.toString());
         }
     }
 

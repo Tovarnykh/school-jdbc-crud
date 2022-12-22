@@ -37,12 +37,11 @@ public class GenerateData implements Command {
             "Thomas", "Taylor", "Moore", "Jackson", "Martin");
 
     @Override
-    public String execute() throws SQLException {
+    public void execute() throws SQLException {
         insertGroups();
         insertCourses();
         insertStudents();
         insertStudentsCourses();
-        return "true";
     }
 
     private void insertGroups() throws SQLException {

@@ -29,7 +29,7 @@ public class AddStudent implements Command {
      *                      database. sentence
      */
     @Override
-    public String execute() throws SQLException {
+    public void execute() throws SQLException {
         try (Connection connection = ConnectionAspect.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(QUERY)) {
             int groupId = ConsoleInterface.readNumber();
@@ -40,7 +40,7 @@ public class AddStudent implements Command {
             preparedStatement.setString(2, firstName);
             preparedStatement.setString(3, lastName);
             preparedStatement.executeUpdate();
-            return "true";
+            System.out.println("\tStudent succsesfully added!");
         }
     }
 

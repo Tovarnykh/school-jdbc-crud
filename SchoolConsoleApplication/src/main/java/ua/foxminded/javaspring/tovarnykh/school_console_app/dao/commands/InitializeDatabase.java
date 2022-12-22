@@ -20,8 +20,8 @@ import java.sql.SQLException;
  */
 public class InitializeDatabase implements Command {
 
-    List<String> executableScripts = List.of("createTableGroups.sql", "createTableStudents.sql",
-            "createTableCourses.sql", "createTableStudents_Courses.sql");
+    List<String> executableScripts = List.of("/createTableGroups.sql", "/createTableStudents.sql",
+            "/createTableCourses.sql", "/createTableStudents_Courses.sql");
 
     /**
      * Method name: execute
@@ -33,11 +33,11 @@ public class InitializeDatabase implements Command {
      *                      gaps in script with user`s data; 3. Send query to
      *                      database. sentence
      */
-    public String execute() throws SQLException {
+    public void execute() throws SQLException {
         executableScripts.forEach(script -> {
             try (Connection connection = ConnectionAspect.getConnection();
-                    InputStream inputSream = getClass().getResourceAsStream("/"+script);
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputSream));) {
+                    InputStream inputStream = getClass().getResourceAsStream(script);
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                 ScriptRunner scriptRunner = new ScriptRunner(connection);
 
                 scriptRunner.setLogWriter(null);
@@ -50,8 +50,6 @@ public class InitializeDatabase implements Command {
                 System.out.println("Cant open Reader class.");
             }
         });
-        new GenerateData().execute();
-        return "true";
     }
 
 }

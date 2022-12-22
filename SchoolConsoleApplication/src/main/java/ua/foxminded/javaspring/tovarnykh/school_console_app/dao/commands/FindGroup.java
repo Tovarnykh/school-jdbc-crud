@@ -35,12 +35,11 @@ public class FindGroup implements Command {
      *                      Receive answer from database.
      */
     @Override
-    public String execute() throws SQLException {
-        StringBuilder resultList = new StringBuilder();
-
+    public void execute() throws SQLException {
         try (Connection connection = ConnectionAspect.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(QUERY)) {
             int amountOfStudents = ConsoleInterface.readNumber();
+            StringBuilder resultList = new StringBuilder();
 
             preparedStatement.setInt(1, amountOfStudents);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -51,7 +50,7 @@ public class FindGroup implements Command {
                 resultList.append(String.format(" %-20s | %11d %n", resultSet.getString("course_name"),
                         resultSet.getInt("inscribed_students")));
             }
-            return resultList.toString();
+            System.out.println(resultList.toString());
         }
     }
 }

@@ -1,16 +1,7 @@
 package ua.foxminded.javaspring.tovarnykh.school_console_app.dao;
 
 import java.sql.SQLException;
-import java.util.List;
-
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.AddStudent;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.AddToCourse;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.Command;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.DeleteStudent;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.FindGroup;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.FindStudents;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.InitializeDatabase;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.RemoveStudent;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.Commands;
 
 /**
  * @author Victor Tovarnykh
@@ -18,9 +9,6 @@ import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.RemoveS
  * @since 0.1.0
  */
 public class CommandProvider {
-
-    private static List<Command> commands = List.of(new InitializeDatabase(), new FindGroup(), new FindStudents(),
-            new AddStudent(), new DeleteStudent(), new AddToCourse(), new RemoveStudent());
 
     /**
      * Method name: executeCommand
@@ -30,8 +18,8 @@ public class CommandProvider {
      *
      *         Execute command by given number.
      */
-    public static String executeCommand(int commandNumber) throws SQLException {
-        return commands.get(commandNumber).execute();
+    public static void executeCommand(Commands command) throws SQLException {
+        command.getCommand().execute();
     }
 
     private CommandProvider() {

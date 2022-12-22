@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.tovarnykh.school_console_app.dao;
+package ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,6 +13,10 @@ import java.util.Properties;
 public class DatabaseProperties {
 
     private static final Properties DATABASE_PROPERTIES = new Properties();
+    
+    private DatabaseProperties() {
+
+    }
 
     /**
      * Method name: getDriver
@@ -44,46 +48,15 @@ public class DatabaseProperties {
         return DATABASE_PROPERTIES.getProperty("password");
     }
     
-    /**
-     * Method name: setDriver
-     *
-     *                      Inside the function: Set new driver in property file.
-     */
-    public static void setDriver(String newDriver) {
-        DATABASE_PROPERTIES.setProperty("driver", newDriver);
-    }
-    
-    /**
-     * Method name: setUserName
-     *
-     *                      Inside the function: Set new user name in property file.
-     */
-    public static void setUserName(String newUserName) {
-        DATABASE_PROPERTIES.setProperty("userName", newUserName);
-    }
-    
-    /**
-     * Method name: setPassword
-     *
-     *                      Inside the function: Set new password in property file.
-     */
-    public static void setPassword(String newPassword) {
-        DATABASE_PROPERTIES.setProperty("password", newPassword);
-    }
-
-    static {
+    public static void readPropertyFile(String fileName) {
         try {
-            InputStream inputStream = DatabaseProperties.class.getClassLoader().getResourceAsStream("databaseProperties.xml");
-            DATABASE_PROPERTIES.loadFromXML(inputStream);
+            InputStream inputStream = DatabaseProperties.class.getClassLoader().getResourceAsStream(fileName);
+            DATABASE_PROPERTIES.load(inputStream);
         } catch (InvalidPropertiesFormatException e) {
-            System.out.println("There is a problem with a property format wich trying to recieve.");
+            System.out.println("Problem with a property variable trying to receive.");
         } catch (IOException e) {
             System.out.println("File with Database properties was not found.");
         }
-    }
-
-    private DatabaseProperties() {
-
     }
 
 }

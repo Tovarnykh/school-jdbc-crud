@@ -29,7 +29,7 @@ public class RemoveStudent implements Command {
      *                      database. sentence
      */
     @Override
-    public String execute() throws SQLException {
+    public void execute() throws SQLException {
         try (Connection connection = ConnectionAspect.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(QUERY)) {
             int studentId = ConsoleInterface.readNumber();
@@ -38,8 +38,8 @@ public class RemoveStudent implements Command {
             preparedStatement.setInt(1, studentId);
             preparedStatement.setInt(2, groupId);
             preparedStatement.executeUpdate();
+            System.out.println("\tStudent succsesfully unenrolled!");
         }
-        return "true";
     }
 
 }
