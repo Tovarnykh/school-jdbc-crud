@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands;
+package ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.List;
 import org.apache.ibatis.jdbc.ScriptRunner;
 
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Command;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.ConnectionAspect;
 
 import java.sql.SQLException;

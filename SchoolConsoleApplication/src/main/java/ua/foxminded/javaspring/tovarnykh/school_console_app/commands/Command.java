@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands;
+package ua.foxminded.javaspring.tovarnykh.school_console_app.commands;
 
 import java.sql.SQLException;
 

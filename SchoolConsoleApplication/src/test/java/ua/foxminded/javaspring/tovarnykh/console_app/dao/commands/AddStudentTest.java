@@ -12,11 +12,11 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.CommandProvider;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.CommandProvider;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Commands;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.ConnectionAspect;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.DatabaseProperties;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.AddStudent;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.Commands;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements.InsertStudent;
 
 class AddStudentTest {
 
@@ -45,7 +45,7 @@ class AddStudentTest {
     @Test
     void execute_CheckIsStudentWasAdd_True() throws Exception {
         Connection connection = ConnectionAspect.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(AddStudent.QUERY);
+        PreparedStatement preparedStatement = connection.prepareStatement(InsertStudent.QUERY);
 
         preparedStatement.setInt(1, 1);
         preparedStatement.setString(2, "Adam");

@@ -11,11 +11,11 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.CommandProvider;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.CommandProvider;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Commands;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.ConnectionAspect;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.DatabaseProperties;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.Commands;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.FindGroup;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements.SelectGroup;
 
 class FindGroupTest {
 
@@ -44,7 +44,7 @@ class FindGroupTest {
     @Test
     void execute_CheckIfAnyGroupsWereFound_True() throws Exception {
         Connection connection = ConnectionAspect.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(FindGroup.QUERY);
+        PreparedStatement preparedStatement = connection.prepareStatement(SelectGroup.QUERY);
         preparedStatement.setInt(1, 25);
         ResultSet resultSet = preparedStatement.executeQuery();
         assertTrue(resultSet.next());

@@ -12,12 +12,12 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.CommandProvider;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.CommandProvider;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Commands;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.ConnectionAspect;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.DatabaseProperties;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.AddStudent;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.AddToCourse;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.Commands;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements.InsertStudent;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements.InsertStudentsCourses;
 
 class AddToCourseTest {
 
@@ -33,7 +33,7 @@ class AddToCourseTest {
             CommandProvider.executeCommand(Commands.INIT);
             CommandProvider.executeCommand(Commands.GENERATE);
             Connection connection = ConnectionAspect.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(AddStudent.QUERY);
+            PreparedStatement preparedStatement = connection.prepareStatement(InsertStudent.QUERY);
 
             preparedStatement.setInt(1, 1);
             preparedStatement.setString(2, "Adam");
@@ -53,7 +53,7 @@ class AddToCourseTest {
     @Test
     void execute_CheckIsStudentWasAddToCourse_True() throws Exception {
         Connection connection = ConnectionAspect.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(AddToCourse.QUERY);
+        PreparedStatement preparedStatement = connection.prepareStatement(InsertStudentsCourses.QUERY);
         preparedStatement.setInt(1, 201);
         preparedStatement.setInt(2, 1);
         preparedStatement.executeUpdate();

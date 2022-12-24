@@ -12,12 +12,12 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.CommandProvider;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.CommandProvider;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Commands;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.ConnectionAspect;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.DatabaseProperties;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.AddStudent;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.Commands;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.DeleteStudent;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements.InsertStudent;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements.DeleteStudentById;
 
 class DeleteStudentTest {
 
@@ -34,7 +34,7 @@ class DeleteStudentTest {
             CommandProvider.executeCommand(Commands.GENERATE);
            
             Connection connection = ConnectionAspect.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(AddStudent.QUERY);
+            PreparedStatement preparedStatement = connection.prepareStatement(InsertStudent.QUERY);
 
             preparedStatement.setInt(1, 1);
             preparedStatement.setString(2, "Adam");
@@ -54,7 +54,7 @@ class DeleteStudentTest {
     @Test
     void execute_CheckIsStudentWasDelete_False() throws Exception {
         Connection connection = ConnectionAspect.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(DeleteStudent.QUERY);
+        PreparedStatement preparedStatement = connection.prepareStatement(DeleteStudentById.QUERY);
         preparedStatement.setInt(1, 201);
         preparedStatement.executeUpdate();
         PreparedStatement checkStatement = connection

@@ -12,11 +12,11 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.CommandProvider;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.CommandProvider;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Commands;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.ConnectionAspect;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.DatabaseProperties;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.Commands;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.FindStudents;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements.SelectStudent;
 
 class FindStudentsTest {
 
@@ -45,7 +45,7 @@ class FindStudentsTest {
     @Test
     void execute_CheckIfAnyStudentsWereFound_True() throws Exception {
         Connection connection = ConnectionAspect.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(FindStudents.QUERY);
+        PreparedStatement preparedStatement = connection.prepareStatement(SelectStudent.QUERY);
         preparedStatement.setString(1, "Art");
         ResultSet resultSet = preparedStatement.executeQuery();
         assertTrue(resultSet.next());

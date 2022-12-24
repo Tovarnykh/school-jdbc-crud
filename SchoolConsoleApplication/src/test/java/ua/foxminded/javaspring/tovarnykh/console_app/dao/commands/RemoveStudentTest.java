@@ -12,13 +12,13 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.CommandProvider;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.CommandProvider;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Commands;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.ConnectionAspect;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.DatabaseProperties;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.AddStudent;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.AddToCourse;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.Commands;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.commands.RemoveStudent;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements.InsertStudent;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements.InsertStudentsCourses;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements.DeleteStudentsCourses;
 
 class RemoveStudentTest {
 
@@ -34,13 +34,13 @@ class RemoveStudentTest {
             CommandProvider.executeCommand(Commands.INIT);
             CommandProvider.executeCommand(Commands.GENERATE);
             Connection connection = ConnectionAspect.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(AddStudent.QUERY);
+            PreparedStatement preparedStatement = connection.prepareStatement(InsertStudent.QUERY);
 
             preparedStatement.setInt(1, 1);
             preparedStatement.setString(2, "Adam");
             preparedStatement.setString(3, "Adamson");
             preparedStatement.executeUpdate();
-            PreparedStatement preparedStatement2 = connection.prepareStatement(AddToCourse.QUERY);
+            PreparedStatement preparedStatement2 = connection.prepareStatement(InsertStudentsCourses.QUERY);
             preparedStatement2.setInt(1, 201);
             preparedStatement2.setInt(2, 1);
             preparedStatement2.executeUpdate();
@@ -58,7 +58,7 @@ class RemoveStudentTest {
     @Test
     void execute_CheckIsStudentWasRemovedFromCourse_False() throws Exception {
         Connection connection = ConnectionAspect.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(RemoveStudent.QUERY);
+        PreparedStatement preparedStatement = connection.prepareStatement(DeleteStudentsCourses.QUERY);
         preparedStatement.setInt(1, 201);
         preparedStatement.setInt(2, 1);
         preparedStatement.executeUpdate();
