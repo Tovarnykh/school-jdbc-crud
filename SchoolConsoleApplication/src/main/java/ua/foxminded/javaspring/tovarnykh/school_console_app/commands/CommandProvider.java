@@ -14,9 +14,6 @@ public class CommandProvider {
     public static Map<Integer, Command> commandByCode = Arrays.asList(Commands.values()).stream()
             .collect(Collectors.toMap(Commands::getIndex, Commands::getCommand));
 
-    public static Map<String, Command> commandByName = Arrays.asList(Commands.values()).stream()
-            .collect(Collectors.toMap(Enum::toString, Commands::getCommand));
-
     private CommandProvider() {
 
     }

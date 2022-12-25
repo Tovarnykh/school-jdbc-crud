@@ -62,7 +62,7 @@ public class ConsolePrinter {
 
             choice = readLine();
             
-            if (choice.chars().allMatch(Character::isDigit)) {
+            if (choice.chars().allMatch(Character::isDigit) && !choice.isEmpty()) {
                 CommandProvider.commandByCode.get(Integer.valueOf(choice)).execute();
             } else if (EXIT.equalsIgnoreCase(choice)) {
                 break;

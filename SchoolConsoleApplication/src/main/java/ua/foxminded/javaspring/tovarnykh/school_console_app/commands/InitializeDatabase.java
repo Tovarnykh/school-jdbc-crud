@@ -16,7 +16,7 @@ public class InitializeDatabase implements Command {
             "/createTableCourses.sql", "/createTableStudents_Courses.sql");
 
     public void execute() throws SQLException {
-        CreateTables.create(executableScripts);
+        CreateTables.create(executableScripts);  
     }
 
 }

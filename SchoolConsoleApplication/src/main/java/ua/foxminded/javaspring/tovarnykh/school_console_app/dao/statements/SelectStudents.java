@@ -16,7 +16,11 @@ import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.Connecti
  * @version 0.15.0
  * @since 0.1.0
  */
-public class SelectStudent {
+public class SelectStudents {
+    
+    private SelectStudents() {
+        
+    }
 
     public static final String QUERY = """
             SELECT CONCAT(first_name, ' ' , last_name) AS student

@@ -20,7 +20,7 @@ public class FindGroup implements Command {
             System.out.print("""
                     ╔════════════════════════════════════════╗
                     ║Insert a number of students` to find    ║
-                    ║courses.                                ║
+                    ║groups.                                 ║
                     ╟────────────────────────────────────────╢
                      in:
                      """);
@@ -29,10 +29,10 @@ public class FindGroup implements Command {
             CachedRowSet cachedSet = SelectGroup.select(amountOfStudents);
             
             resultList.append(ConsolePrinter.SEPARATOR);
-            resultList.append(String.format(" %-20s | %s %n", "Course name", "Inscribed students"));
+            resultList.append(String.format(" %-20s | %13s %n", "Group name", "Students"));
             resultList.append(ConsolePrinter.SEPARATOR);
             while (cachedSet.next()) {
-                resultList.append(String.format(" %-20s | %11d %n", cachedSet.getString("course_name"),
+                resultList.append(String.format(" %-20s | %11d %n", cachedSet.getString("group_name"),
                         cachedSet.getInt("inscribed_students")));
             }
             cachedSet.close();

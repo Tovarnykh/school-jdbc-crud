@@ -4,57 +4,44 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.CommandProvider;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Commands;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.ConnectionAspect;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.DatabaseProperties;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements.InsertStudent;
 
 class AddStudentTest {
 
-    private static Connection conn;
+    private static Connection connection;
 
     @BeforeAll
-    static void setUp() {
-        try {
-            Class.forName("org.h2.Driver");
-            DatabaseProperties.readPropertyFile("testDatabaseProperties.properties");
-            conn = DriverManager.getConnection(DatabaseProperties.getDriver(), DatabaseProperties.getUserName(),
-                    DatabaseProperties.getPassword());
-            CommandProvider.executeCommand(Commands.INIT);
-            CommandProvider.executeCommand(Commands.GENERATE);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
+    static void setUp() throws SQLException, ClassNotFoundException {
+        Class.forName("org.h2.Driver");
+        DatabaseProperties.readPropertyFile("testDatabaseProperties.properties");
+        connection = DriverManager.getConnection(DatabaseProperties.getDriver(), DatabaseProperties.getUserName(),
+                DatabaseProperties.getPassword());
+        CommandProvider.commandByCode.get(0).execute();
+        CommandProvider.commandByCode.get(100).execute();
     }
 
     @AfterAll
     static void tearDownAfterClass() throws Exception {
-        conn.close();
+        connection.close();
     }
 
     @Test
-    void execute_CheckIsStudentWasAdd_True() throws Exception {
-        Connection connection = ConnectionAspect.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(InsertStudent.QUERY);
-
-        preparedStatement.setInt(1, 1);
-        preparedStatement.setString(2, "Adam");
-        preparedStatement.setString(3, "Adamson");
-        preparedStatement.executeUpdate();
-        PreparedStatement checkStatement = connection
-                .prepareStatement("SELECT student_id FROM students WHERE student_id = 201");
-        ResultSet resultSet = checkStatement.executeQuery();
-        assertTrue(resultSet.next());
+    void execute_CheckIsStudentWasAdd_True() throws SQLException, ClassNotFoundException {
+        InsertStudent.insert(1, "Adam", "Adamson");
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery("SELECT student_id FROM students WHERE student_id = 201");
+            assertTrue(resultSet.next());
+        }
     }
 
 }

@@ -14,21 +14,25 @@ import ua.foxminded.javaspring.tovarnykh.school_console_app.main.ConsolePrinter;
 public class AddStudent implements Command {
 
     @Override
-    public void execute() throws SQLException {
-            System.out.print("""
-                    ╔══════════════════════════════════════════╗
-                    ║Insert: group id, first name and last_name║
-                    ║              to add student.             ║
-                    ╟──────────────────────────────────────────╢
-                     in:
-                     """);
+    public void execute() {
+        System.out.print("""
+                ╔══════════════════════════════════════════╗
+                ║Insert: group id, first name and last_name║
+                ║              to add student.             ║
+                ╟──────────────────────────────────────────╢
+                 in:
+                 """);
 
-            int groupId = ConsolePrinter.readNumber();
-            String firstName = ConsolePrinter.readLine();
-            String lastName = ConsolePrinter.readLine();
+        int groupId = ConsolePrinter.readNumber();
+        String firstName = ConsolePrinter.readLine();
+        String lastName = ConsolePrinter.readLine();
 
+        try {
             InsertStudent.insert(groupId, firstName, lastName);
-            ConsolePrinter.closeWindow();
+        } catch (SQLException e) {
+            System.out.println("Incorrect data in Input");
+        }
+        ConsolePrinter.closeWindow();
     }
 
 }

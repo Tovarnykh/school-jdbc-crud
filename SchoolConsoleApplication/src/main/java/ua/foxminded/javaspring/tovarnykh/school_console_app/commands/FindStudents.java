@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 import javax.sql.rowset.CachedRowSet;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements.SelectStudent;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements.SelectStudents;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.main.ConsolePrinter;
 
 /**
@@ -26,7 +26,7 @@ public class FindStudents implements Command {
         
         String courseName = ConsolePrinter.readLine();
         StringBuilder resultList = new StringBuilder();
-        CachedRowSet cachedSet = SelectStudent.select(courseName);
+        CachedRowSet cachedSet = SelectStudents.select(courseName);
         
         resultList.append(ConsolePrinter.SEPARATOR);
         resultList.append(String.format(" %25s %s %n", "Students of", courseName));

@@ -20,7 +20,11 @@ public class InsertMultiplyStudent {
             .map(student -> student.split(" "))
             .forEach(student -> {
                 try {
-                    preparedStatement.setInt(1, Integer.parseInt(student[0]));
+                    if(Integer.parseInt(student[0])>10) {
+                        preparedStatement.setNull(1, java.sql.Types.INTEGER);
+                    } else {
+                        preparedStatement.setInt(1, Integer.parseInt(student[0]));
+                    }
                     preparedStatement.setString(2, student[1]);
                     preparedStatement.setString(3, student[2]);
                     preparedStatement.addBatch();

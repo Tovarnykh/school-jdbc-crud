@@ -11,20 +11,20 @@ import javax.sql.rowset.RowSetProvider;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.ConnectionAspect;
 
 /**
-*
-* @author Victor Tovarnykh
-* @version 0.15.0
-* @since 0.1.0
-*/
+ *
+ * @author Victor Tovarnykh
+ * @version 0.15.0
+ * @since 0.1.0
+ */
 public class SelectGroup {
 
     public static final String QUERY = """
-            SELECT course_name,  COUNT(student_id) AS inscribed_students
-            FROM students_courses
-            JOIN courses ON courses.course_id = students_courses.course_id
-            GROUP BY course_name
+            SELECT group_name,  COUNT(student_id) AS inscribed_students
+            FROM students
+            JOIN groups ON groups.group_id = students.group_id
+            GROUP BY group_name
             HAVING COUNT(student_id) >= (?)
-            ORDER BY course_name
+            ORDER BY inscribed_students
             """;
 
     public static CachedRowSet select(int amountOfStudents) throws SQLException {
@@ -32,9 +32,9 @@ public class SelectGroup {
         try (Connection connection = ConnectionAspect.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(QUERY)) {
             preparedStatement.setInt(1, amountOfStudents);
-            ResultSet resultSet =  preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             rowSet.populate(resultSet);
             return rowSet;
-        } 
+        }
     }
 }

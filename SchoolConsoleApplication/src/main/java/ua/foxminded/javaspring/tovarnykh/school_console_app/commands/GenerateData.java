@@ -59,7 +59,7 @@ public class GenerateData implements Command {
         }
     }
 
-    private List<String> generateStudents() throws SQLException {
+    private List<String> generateStudents() {
         List<String> students = new ArrayList<>();
         String firstName;
         String lastName;
@@ -67,7 +67,7 @@ public class GenerateData implements Command {
 
         for (int i = 0; i < STUDENTS_TO_GENERATE; i++) {
             StringBuilder student = new StringBuilder();
-            groupId = random.nextInt(1, groups.size());
+            groupId = random.nextInt(1, groups.size()+2);
             firstName = FIRST_NAMES.stream()
                     .skip(random.nextInt(FIRST_NAMES.size()))
                     .findFirst().get();
@@ -85,7 +85,7 @@ public class GenerateData implements Command {
         return students;
     }
 
-    private List<String> generateStudentsCourses() throws SQLException {
+    private List<String> generateStudentsCourses() {
         int coursesToAsign = 4;
         AtomicInteger iterator = new AtomicInteger(0);
         List<String> records = new ArrayList<>();
