@@ -7,19 +7,18 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.CommandProvider;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.DatabaseProperties;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements.InsertStudent;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements.InsertStudentsCourses;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Command;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsCoursesDAO;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsDAO;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.DatabaseProperties;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDAO;
 
 class AddToCourseTest {
-    
+
     private static Connection connection;
 
     @BeforeAll
@@ -28,21 +27,23 @@ class AddToCourseTest {
         DatabaseProperties.readPropertyFile("testDatabaseProperties.properties");
         connection = DriverManager.getConnection(DatabaseProperties.getDriver(), DatabaseProperties.getUserName(),
                 DatabaseProperties.getPassword());
-        CommandProvider.commandByCode.get(0).execute();
-        CommandProvider.commandByCode.get(100).execute();
+        Command.INIT.getCommand().execute();
+        Command.POPULATE.getCommand().execute();
     }
 
     @AfterAll
     static void tearDownAfterClass() throws Exception {
         connection.close();
     }
-    
+
     @Test
     void execute_CheckIsStudentWasAddToCourse_True() throws Exception {
-            InsertStudent.insert(1, "Adam", "Adamson");
-        try (Statement statement = connection.createStatement()) {
-            InsertStudentsCourses.insert(201, 1);
-        }
+        StudentsDAO studentDAO = FabricDAO.getStudents();
+        StudentsCoursesDAO studentsCoursesDAO = new StudentsCoursesDAO();
+        
+        studentDAO.insert(1, "Adam", "Adamson");
+        studentsCoursesDAO.insert(201, 1);
+
         PreparedStatement checkStatement = connection
                 .prepareStatement("SELECT * FROM students_courses WHERE student_id = 201 AND course_id = 1");
         ResultSet resultSet = checkStatement.executeQuery();

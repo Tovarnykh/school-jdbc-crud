@@ -4,7 +4,8 @@ import java.sql.SQLException;
 
 import javax.sql.rowset.CachedRowSet;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements.SelectStudents;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsCoursesDAO;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDAO;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.main.ConsolePrinter;
 
 /**
@@ -13,7 +14,7 @@ import ua.foxminded.javaspring.tovarnykh.school_console_app.main.ConsolePrinter;
  * @version 0.15.0
  * @since 0.1.0
  */
-public class FindStudents implements Command {
+public class FindStudents implements ControllerCommand {
 
     @Override
     public void execute() throws SQLException {
@@ -23,11 +24,12 @@ public class FindStudents implements Command {
                 ╟──────────────────────────────────────────╢
                  in:
                  """);
-        
+
         String courseName = ConsolePrinter.readLine();
         StringBuilder resultList = new StringBuilder();
-        CachedRowSet cachedSet = SelectStudents.select(courseName);
-        
+        StudentsCoursesDAO studentsCoursesDAO = FabricDAO.getStudentsCourses();
+        CachedRowSet cachedSet = studentsCoursesDAO.select(courseName);
+
         resultList.append(ConsolePrinter.SEPARATOR);
         resultList.append(String.format(" %25s %s %n", "Students of", courseName));
         resultList.append(ConsolePrinter.SEPARATOR);

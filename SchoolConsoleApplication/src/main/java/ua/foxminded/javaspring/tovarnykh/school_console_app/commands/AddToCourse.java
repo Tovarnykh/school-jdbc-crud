@@ -2,10 +2,11 @@ package ua.foxminded.javaspring.tovarnykh.school_console_app.commands;
 
 import java.sql.SQLException;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements.InsertStudentsCourses;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsCoursesDAO;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDAO;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.main.ConsolePrinter;
 
-public class AddToCourse implements Command {
+public class AddToCourse implements ControllerCommand {
 
     @Override
     public void execute() {
@@ -20,7 +21,8 @@ public class AddToCourse implements Command {
         int courseId = ConsolePrinter.readNumber();
 
         try {
-            InsertStudentsCourses.insert(studentId, courseId);
+            StudentsCoursesDAO studentsCoursesDAO = FabricDAO.getStudentsCourses();
+            studentsCoursesDAO.insert(studentId, courseId);
         } catch (SQLException e) {
             System.out.println("Incorrect data in Input");
         }

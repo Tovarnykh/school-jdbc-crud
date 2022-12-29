@@ -12,9 +12,10 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.CommandProvider;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.DatabaseProperties;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements.InsertStudent;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Command;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsDAO;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.DatabaseProperties;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDAO;
 
 class AddStudentTest {
 
@@ -26,8 +27,8 @@ class AddStudentTest {
         DatabaseProperties.readPropertyFile("testDatabaseProperties.properties");
         connection = DriverManager.getConnection(DatabaseProperties.getDriver(), DatabaseProperties.getUserName(),
                 DatabaseProperties.getPassword());
-        CommandProvider.commandByCode.get(0).execute();
-        CommandProvider.commandByCode.get(100).execute();
+        Command.INIT.getCommand().execute();
+        Command.POPULATE.getCommand().execute();
     }
 
     @AfterAll
@@ -37,7 +38,8 @@ class AddStudentTest {
 
     @Test
     void execute_CheckIsStudentWasAdd_True() throws SQLException, ClassNotFoundException {
-        InsertStudent.insert(1, "Adam", "Adamson");
+        StudentsDAO studentDAO = FabricDAO.getStudents();
+        studentDAO.insert(1, "Adam", "Adamson");
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery("SELECT student_id FROM students WHERE student_id = 201");
             assertTrue(resultSet.next());

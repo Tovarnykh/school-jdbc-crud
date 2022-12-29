@@ -5,17 +5,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
-
 import javax.sql.rowset.CachedRowSet;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.CommandProvider;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.DatabaseProperties;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements.SelectGroup;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Command;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.GroupsDAO;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.DatabaseProperties;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDAO;
 
 class FindGroupTest {
 
@@ -27,8 +26,8 @@ class FindGroupTest {
         DatabaseProperties.readPropertyFile("testDatabaseProperties.properties");
         connection = DriverManager.getConnection(DatabaseProperties.getDriver(), DatabaseProperties.getUserName(),
                 DatabaseProperties.getPassword());
-        CommandProvider.commandByCode.get(0).execute();
-        CommandProvider.commandByCode.get(100).execute();
+        Command.INIT.getCommand().execute();
+        Command.POPULATE.getCommand().execute();
     }
 
     @AfterAll
@@ -38,10 +37,9 @@ class FindGroupTest {
 
     @Test
     void execute_CheckIfAnyGroupsWereFound_True() throws Exception {
-        try (Statement statement = connection.createStatement()) {
-            CachedRowSet cachedRowSet = SelectGroup.select(1);
-            assertTrue(cachedRowSet.next());
-        }
+        GroupsDAO groupsDAO = FabricDAO.getGroups();
+        CachedRowSet cachedRowSet = groupsDAO.select(1);
+        assertTrue(cachedRowSet.next());
     }
 
 }

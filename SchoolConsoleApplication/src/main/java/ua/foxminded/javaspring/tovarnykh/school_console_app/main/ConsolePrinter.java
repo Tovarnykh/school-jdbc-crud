@@ -3,8 +3,9 @@ package ua.foxminded.javaspring.tovarnykh.school_console_app.main;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Command;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.CommandProvider;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.DatabaseProperties;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.DatabaseProperties;
 
 /**
  *
@@ -26,8 +27,8 @@ public class ConsolePrinter {
      */
     public ConsolePrinter() throws SQLException {
         DatabaseProperties.readPropertyFile("databaseProperties.properties");
-        CommandProvider.commandByCode.get(0).execute();
-        CommandProvider.commandByCode.get(100).execute();
+        Command.INIT.getCommand().execute();
+        Command.POPULATE.getCommand().execute();
     }
 
     /**
@@ -61,7 +62,7 @@ public class ConsolePrinter {
                     """);
 
             choice = readLine();
-            
+
             if (choice.chars().allMatch(Character::isDigit) && !choice.isEmpty()) {
                 CommandProvider.commandByCode.get(Integer.valueOf(choice)).execute();
             } else if (EXIT.equalsIgnoreCase(choice)) {
@@ -80,7 +81,7 @@ public class ConsolePrinter {
         System.out.print(">");
         return ConsolePrinter.in.nextLine();
     }
-    
+
     /**
      * Method name: readNumber
      *
@@ -95,7 +96,7 @@ public class ConsolePrinter {
         } while (input.chars().noneMatch(Character::isDigit));
         return Integer.parseInt(input);
     }
-    
+
     public static void closeWindow() {
         System.out.println("""
                 ╚══════════════════════════════════════════╝

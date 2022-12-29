@@ -12,9 +12,9 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.CommandProvider;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.aspects.DatabaseProperties;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.statements.SelectStudents;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Command;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsCoursesDAO;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.DatabaseProperties;
 
 class FindStudentsTest {
 
@@ -26,8 +26,8 @@ class FindStudentsTest {
         DatabaseProperties.readPropertyFile("testDatabaseProperties.properties");
         connection = DriverManager.getConnection(DatabaseProperties.getDriver(), DatabaseProperties.getUserName(),
                 DatabaseProperties.getPassword());
-        CommandProvider.commandByCode.get(0).execute();
-        CommandProvider.commandByCode.get(100).execute();
+        Command.INIT.getCommand().execute();
+        Command.POPULATE.getCommand().execute();
     }
 
     @AfterAll
@@ -38,7 +38,8 @@ class FindStudentsTest {
     @Test
     void execute_CheckIfAnyStudentsWereFound_True() throws Exception {
         try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = SelectStudents.select("Art");
+            StudentsCoursesDAO studentsCoursesDAO = new StudentsCoursesDAO();
+            ResultSet resultSet = studentsCoursesDAO.select("Art");
             assertTrue(resultSet.next());
         }
     }
