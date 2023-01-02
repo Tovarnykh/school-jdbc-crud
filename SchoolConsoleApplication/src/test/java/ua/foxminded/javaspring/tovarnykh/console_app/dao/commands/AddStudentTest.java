@@ -24,7 +24,7 @@ class AddStudentTest {
     @BeforeAll
     static void setUp() throws SQLException, ClassNotFoundException {
         Class.forName("org.h2.Driver");
-        DatabaseProperties.readPropertyFile("testDatabaseProperties.properties");
+        DatabaseProperties.readPropertyFile("application.properties");
         connection = DriverManager.getConnection(DatabaseProperties.getDriver(), DatabaseProperties.getUserName(),
                 DatabaseProperties.getPassword());
         Command.INIT.getCommand().execute();

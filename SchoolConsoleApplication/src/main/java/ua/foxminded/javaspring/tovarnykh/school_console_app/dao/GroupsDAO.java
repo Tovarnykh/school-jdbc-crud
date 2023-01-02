@@ -13,9 +13,9 @@ import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.Connectio
 
 public class GroupsDAO {
 
-    private final String INSERT_GROUPS = "INSERT INTO groups (group_name) VALUES (?);";
+    private static final String INSERT_GROUPS = "INSERT INTO groups (group_name) VALUES (?);";
 
-    private final String SELECT_GROUPS = """
+    private static final String SELECT_GROUPS = """
             SELECT group_name,  COUNT(student_id) AS inscribed_students
             FROM students
             JOIN groups ON groups.group_id = students.group_id

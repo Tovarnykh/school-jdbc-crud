@@ -7,20 +7,25 @@ import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsDAO;
 
 public final class FabricDAO {
     
+    static StudentsDAO studentsDAO = new StudentsDAO();
+    static StudentsCoursesDAO studentsCoursesDAO = new StudentsCoursesDAO();
+    static GroupsDAO groupsDAO = new GroupsDAO();
+    static CoursesDAO coursesDAO = new CoursesDAO();
+    
     public static StudentsDAO getStudents() {
-        return new StudentsDAO();
+        return studentsDAO;
     }
     
     public static StudentsCoursesDAO getStudentsCourses() {
-        return new StudentsCoursesDAO();
+        return studentsCoursesDAO;
     }
     
     public static GroupsDAO getGroups() {
-        return new GroupsDAO();
+        return groupsDAO;
     }
     
     public static CoursesDAO getCourses() {
-        return new CoursesDAO();
+        return coursesDAO;
     }
     
 }

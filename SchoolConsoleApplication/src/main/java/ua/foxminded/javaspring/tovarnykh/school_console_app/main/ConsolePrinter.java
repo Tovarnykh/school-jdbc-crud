@@ -26,7 +26,6 @@ public class ConsolePrinter {
      * Constructor that generates database before user can interact with it.
      */
     public ConsolePrinter() throws SQLException {
-        DatabaseProperties.readPropertyFile("databaseProperties.properties");
         Command.INIT.getCommand().execute();
         Command.POPULATE.getCommand().execute();
     }

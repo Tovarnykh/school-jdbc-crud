@@ -15,8 +15,8 @@ import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.Connectio
 
 public class CreateTables {
 
-    public void create(List<String> executableScripts) {
-        executableScripts.forEach(script -> {
+    public void create(List<String> scripts) {
+        scripts.forEach(script -> {
             try (Connection connection = ConnectionManager.getConnection();
                     InputStream inputStream = CreateTables.class.getResourceAsStream(script);
                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {

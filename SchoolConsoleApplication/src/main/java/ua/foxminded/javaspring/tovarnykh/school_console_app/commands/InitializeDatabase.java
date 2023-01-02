@@ -13,12 +13,11 @@ import java.sql.SQLException;
  */
 public class InitializeDatabase implements ControllerCommand {
 
-    List<String> executableScripts = List.of("/createTableGroups.sql", "/createTableStudents.sql",
+    private static final List<String> executableScripts = List.of("/createTableGroups.sql", "/createTableStudents.sql",
             "/createTableCourses.sql", "/createTableStudents_Courses.sql");
 
     public void execute() throws SQLException {
-        CreateTables сreateTables = new CreateTables();
-        сreateTables.create(executableScripts);
+        new CreateTables().create(executableScripts);
     }
 
 }

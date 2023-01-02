@@ -9,7 +9,7 @@ import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.Connectio
 
 public class CoursesDAO {
 
-    private final String INSERT_COURSES = "INSERT INTO courses (course_name) VALUES (?);";
+    private static final String INSERT_COURSES = "INSERT INTO courses (course_name) VALUES (?);";
 
     public void insertMultiplyCourses(List<String> courses) throws SQLException {
         try (Connection connection = ConnectionManager.getConnection();

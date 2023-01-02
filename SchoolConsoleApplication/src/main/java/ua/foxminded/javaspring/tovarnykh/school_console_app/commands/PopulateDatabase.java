@@ -7,8 +7,8 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Entities.Student;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Entities.StudentsCourses;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.pojo.Student;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.pojo.StudentsCourses;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.CoursesDAO;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.GroupsDAO;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsCoursesDAO;
@@ -21,6 +21,8 @@ import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDAO
  * @since 0.1.0
  */
 public class PopulateDatabase implements ControllerCommand {
+    
+    public static List<String> groups = new ArrayList<>();
 
     private final int STUDENTS_TO_GENERATE = 200;
 
@@ -34,7 +36,6 @@ public class PopulateDatabase implements ControllerCommand {
             "Thomas", "Taylor", "Moore", "Jackson", "Martin");
 
     private Random random = new Random();
-    private List<String> groups = new ArrayList<>();
 
     @Override
     public void execute() throws SQLException {
@@ -71,19 +72,20 @@ public class PopulateDatabase implements ControllerCommand {
     private List<Student> generateStudents() {
         List<Student> students = new ArrayList<>();
         String firstName;
-        String lastName;
+        String secondName;
         int groupId;
 
         for (int i = 0; i < STUDENTS_TO_GENERATE; i++) {
             groupId = random.nextInt(1, groups.size() + 2);
             firstName = FIRST_NAMES.stream().skip(random.nextInt(FIRST_NAMES.size())).findFirst().get();
-            lastName = LAST_NAMES.stream().skip(random.nextInt(FIRST_NAMES.size())).findFirst().get();
+            secondName = LAST_NAMES.stream().skip(random.nextInt(FIRST_NAMES.size())).findFirst().get();
 
-            students.add(new Student());
-            students.get(i).setGroupId(groupId);
-            students.get(i).setFirstName(firstName);
-            students.get(i).setSecondName(lastName);
-            ;
+            Student student = new Student();
+            student.setGroupId(groupId);
+            student.setFirstName(firstName);
+            student.setSecondName(secondName);
+            
+            students.add(student);
         }
         return students;
     }
@@ -93,11 +95,15 @@ public class PopulateDatabase implements ControllerCommand {
         AtomicInteger iterator = new AtomicInteger(0);
         List<StudentsCourses> studentsCourses = new ArrayList<>();
 
-        Stream.iterate(1, n -> n + 1).limit(STUDENTS_TO_GENERATE).forEachOrdered(studentId -> {
+        Stream.iterate(1, n -> n + 1)
+        .limit(STUDENTS_TO_GENERATE)
+        .forEachOrdered(studentId -> {
             List<Integer> numbers = new ArrayList<>();
             iterator.set(0);
 
-            Stream.iterate(1, n -> n + 1).limit(random.nextInt(1, coursesToAsign)).forEach(courseId -> {
+            Stream.iterate(1, n -> n + 1)
+            .limit(random.nextInt(1, coursesToAsign))
+            .forEach(courseId -> {
                 int generatedCourse = random.nextInt(1, COURSES.size() + 1);
 
                 if (!(numbers.contains(generatedCourse))) {

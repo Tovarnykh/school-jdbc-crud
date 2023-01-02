@@ -5,16 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Entities.Student;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.PopulateDatabase;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.pojo.Student;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.ConnectionManager;
 
 public class StudentsDAO {
 
-    private final String DELETE_STUDENTS = """
+    private static final String DELETE_STUDENTS = """
             DELETE FROM students
             WHERE student_id = (?)
             """;
-    private final String INSERT_STUDENTS = """
+    private static final String INSERT_STUDENTS = """
             INSERT INTO students (group_id, first_name, last_name) VALUES (?, ?, ?)
             """;
 
@@ -33,7 +34,7 @@ public class StudentsDAO {
                 PreparedStatement preparedStatement = connection.prepareStatement(INSERT_STUDENTS)) {
             list.stream().forEach(student -> {
                 try {
-                    if (student.getGroupId() > 10) {
+                    if (student.getGroupId() > PopulateDatabase.groups.size()) {
                         preparedStatement.setNull(1, java.sql.Types.INTEGER);
                     } else {
                         preparedStatement.setInt(1, student.getGroupId());

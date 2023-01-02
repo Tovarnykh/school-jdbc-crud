@@ -9,19 +9,19 @@ import java.util.List;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetProvider;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Entities.StudentsCourses;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.pojo.StudentsCourses;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.ConnectionManager;
 
 public class StudentsCoursesDAO {
 
-    private final String INSERT_STUDENTS_COURSES = "INSERT INTO students_courses(student_id, course_id) VALUES (?,?);";
+    private static final String INSERT_STUDENTS_COURSES = "INSERT INTO students_courses(student_id, course_id) VALUES (?,?);";
 
-    private final String DELETE_STUDENTS_COURSES = """
+    private static final String DELETE_STUDENTS_COURSES = """
             DELETE FROM students_courses
             WHERE student_id = (?) AND course_id = (?)
             """;
 
-    private final String SELECT_STUDENTSCOURSES = """
+    private static final String SELECT_STUDENTSCOURSES = """
             SELECT CONCAT(first_name, ' ' , last_name) AS student
             FROM students_courses
             JOIN students ON students.student_id = students_courses.student_id

@@ -2,6 +2,8 @@ package ua.foxminded.javaspring.tovarnykh.school_console_app.main;
 
 import java.sql.SQLException;
 
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.DatabaseProperties;
+
 /**
 *
 * @author Victor Tovarnykh
@@ -17,6 +19,7 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
+            DatabaseProperties.readPropertyFile("application.properties");
             ConsolePrinter console = new ConsolePrinter();
             console.exerciseChooser();
         } catch (SQLException e) {

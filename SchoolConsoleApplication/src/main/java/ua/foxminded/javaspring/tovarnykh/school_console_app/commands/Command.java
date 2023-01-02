@@ -10,6 +10,11 @@ public enum Command {
     DELETE_STUDENT(4, new DeleteStudent()),
     ADD_TO_COURSE(5, new AddToCourse()), 
     REMOVE_STUDENT(6, new RemoveStudent());
+    
+    Command(int index, ControllerCommand command) {
+        this.index = index;
+        this.command = command;
+    }
 
     private int index;
     private ControllerCommand command;
@@ -21,9 +26,5 @@ public enum Command {
     public ControllerCommand getCommand() {
         return command;
     }
-
-    Command(int index, ControllerCommand command) {
-        this.index = index;
-        this.command = command;
-    }
+    
 }
