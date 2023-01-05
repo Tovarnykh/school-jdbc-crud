@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Command;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.CommandProvider;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.DatabaseProperties;
 
 /**
  *
@@ -47,7 +46,7 @@ public class ConsolePrinter {
                     ║   Choose command To Interact with DB    ║
                     ╠─────────────────────────────────────────╣
                     ║1 - Find all groups with                 ║
-                    ║    less or equal students’ number.      ║
+                    ║    more or equal students’ number.      ║
                     ║2 - Find all students related to         ║
                     ║    the course with the given name.      ║
                     ║3 - Add a new student.                   ║
@@ -78,7 +77,7 @@ public class ConsolePrinter {
      */
     public static String readLine() {
         System.out.print(">");
-        return ConsolePrinter.in.nextLine();
+        return in.nextLine();
     }
 
     /**
@@ -96,7 +95,7 @@ public class ConsolePrinter {
         return Integer.parseInt(input);
     }
 
-    public static void closeWindow() {
+    public static void closeSection() {
         System.out.println("""
                 ╚══════════════════════════════════════════╝
                 Enter any key to continue...

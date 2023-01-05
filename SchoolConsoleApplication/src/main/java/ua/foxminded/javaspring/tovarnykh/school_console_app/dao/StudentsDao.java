@@ -6,10 +6,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.PopulateDatabase;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.pojo.Student;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.ConnectionManager;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.pojo.Student;
 
-public class StudentsDAO {
+public class StudentsDao {
 
     private static final String DELETE_STUDENTS = """
             DELETE FROM students

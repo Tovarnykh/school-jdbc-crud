@@ -4,8 +4,8 @@ import java.sql.SQLException;
 
 import javax.sql.rowset.CachedRowSet;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.GroupsDAO;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDAO;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.GroupsDao;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDao;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.main.ConsolePrinter;
 
 /**
@@ -28,8 +28,8 @@ public class FindGroup implements ControllerCommand {
 
         int amountOfStudents = ConsolePrinter.readNumber();
         StringBuilder resultList = new StringBuilder();
-        GroupsDAO groupsDAO = FabricDAO.getGroups();
-        CachedRowSet cachedSet = groupsDAO.select(amountOfStudents);
+        GroupsDao groupsDAO = FabricDao.getGroupsDao();
+        CachedRowSet cachedSet = groupsDAO.getStudentsAmountInGroups(amountOfStudents);
 
         resultList.append(ConsolePrinter.SEPARATOR);
         resultList.append(String.format(" %-20s | %13s %n", "Group name", "Students"));
@@ -39,7 +39,7 @@ public class FindGroup implements ControllerCommand {
                     cachedSet.getInt("inscribed_students")));
         }
         cachedSet.close();
-        System.out.println(resultList.toString());
-        ConsolePrinter.closeWindow();
+        System.out.println(resultList);
+        ConsolePrinter.closeSection();
     }
 }

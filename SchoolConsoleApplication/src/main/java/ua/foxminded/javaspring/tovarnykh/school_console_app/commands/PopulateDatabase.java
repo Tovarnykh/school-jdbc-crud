@@ -7,13 +7,13 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.pojo.Student;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.pojo.StudentsCourses;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.CoursesDAO;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.GroupsDAO;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsCoursesDAO;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsDAO;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDAO;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.CoursesDao;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.GroupsDao;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsCoursesDao;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsDao;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDao;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.pojo.Student;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.pojo.StudentsCourses;
 
 /**
  * @author Victor Tovarnykh
@@ -22,12 +22,12 @@ import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDAO
  */
 public class PopulateDatabase implements ControllerCommand {
     
+    public static final List<String> COURSES = List.of("Mathematics", "Science", "Language Arts", "Health", "Handwriting",
+            "Physical Education", "Art", "Music", "Instrumental Music", "Dance");
     public static List<String> groups = new ArrayList<>();
 
     private final int STUDENTS_TO_GENERATE = 200;
 
-    private final List<String> COURSES = List.of("Mathematics", "Science", "Language Arts", "Health", "Handwriting",
-            "Physical Education", "Art", "Music", "Instrumental Music", "Dance");
     private final List<String> FIRST_NAMES = List.of("Liam", "Olivia", "Noah", "Emma", "Oliver", "Charlotte", "Elijah",
             "Amelia", "James", "Ava", "William", "Sophia", "Benjamin", "Isabella", "Lucas", "Mia", "Henry", "Evelyn",
             "Theodore", "Harper");
@@ -39,10 +39,10 @@ public class PopulateDatabase implements ControllerCommand {
 
     @Override
     public void execute() throws SQLException {
-        StudentsDAO studentDAO = FabricDAO.getStudents();
-        CoursesDAO coursesDAO = FabricDAO.getCourses();
-        GroupsDAO groupsDAO = FabricDAO.getGroups();
-        StudentsCoursesDAO studentsCoursesDAO = new StudentsCoursesDAO();
+        StudentsDao studentDAO = FabricDao.getStudentsDao();
+        CoursesDao coursesDAO = FabricDao.getCoursesDao();
+        GroupsDao groupsDAO = FabricDao.getGroupsDao();
+        StudentsCoursesDao studentsCoursesDAO = FabricDao.getStudentsCoursesDao();
 
         generateGroups();
         groupsDAO.insertMultiply(groups);
@@ -53,11 +53,11 @@ public class PopulateDatabase implements ControllerCommand {
 
     private void generateGroups() {
         StringBuilder groupName;
-        int numberOfGourps = 10;
+        int numberOfGroups = 10;
         int numberOfDigits = 9;
         int alphabetSize = 26;
 
-        for (int i = 0; i < numberOfGourps; i++) {
+        for (int i = 0; i < numberOfGroups; i++) {
             groupName = new StringBuilder();
 
             groupName.append((char) (random.nextInt(alphabetSize) + 'a'));
@@ -77,8 +77,14 @@ public class PopulateDatabase implements ControllerCommand {
 
         for (int i = 0; i < STUDENTS_TO_GENERATE; i++) {
             groupId = random.nextInt(1, groups.size() + 2);
-            firstName = FIRST_NAMES.stream().skip(random.nextInt(FIRST_NAMES.size())).findFirst().get();
-            secondName = LAST_NAMES.stream().skip(random.nextInt(FIRST_NAMES.size())).findFirst().get();
+            firstName = FIRST_NAMES.stream()
+                    .skip(random.nextInt(FIRST_NAMES.size()))
+                    .findFirst()
+                    .get();
+            secondName = LAST_NAMES.stream()
+                    .skip(random.nextInt(FIRST_NAMES.size()))
+                    .findFirst()
+                    .get();
 
             Student student = new Student();
             student.setGroupId(groupId);

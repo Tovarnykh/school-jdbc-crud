@@ -7,7 +7,7 @@ import java.util.List;
 
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.ConnectionManager;
 
-public class CoursesDAO {
+public class CoursesDao {
 
     private static final String INSERT_COURSES = "INSERT INTO courses (course_name) VALUES (?);";
 

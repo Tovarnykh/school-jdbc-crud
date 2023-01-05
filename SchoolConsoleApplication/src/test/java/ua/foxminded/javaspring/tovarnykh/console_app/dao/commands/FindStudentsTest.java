@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Command;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsCoursesDAO;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsCoursesDao;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.DatabaseProperties;
 
 class FindStudentsTest {
@@ -23,7 +23,7 @@ class FindStudentsTest {
     @BeforeAll
     static void setUp() throws SQLException, ClassNotFoundException {
         Class.forName("org.h2.Driver");
-        DatabaseProperties.readPropertyFile("application.properties");
+        DatabaseProperties.readPropertyFile();
         connection = DriverManager.getConnection(DatabaseProperties.getDriver(), DatabaseProperties.getUserName(),
                 DatabaseProperties.getPassword());
         Command.INIT.getCommand().execute();
@@ -38,8 +38,8 @@ class FindStudentsTest {
     @Test
     void execute_CheckIfAnyStudentsWereFound_True() throws Exception {
         try (Statement statement = connection.createStatement()) {
-            StudentsCoursesDAO studentsCoursesDAO = new StudentsCoursesDAO();
-            ResultSet resultSet = studentsCoursesDAO.select("Art");
+            StudentsCoursesDao studentsCoursesDAO = new StudentsCoursesDao();
+            ResultSet resultSet = studentsCoursesDAO.getStudentsInCourse("Art");
             assertTrue(resultSet.next());
         }
     }

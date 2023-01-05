@@ -4,8 +4,8 @@ import java.sql.SQLException;
 
 import javax.sql.rowset.CachedRowSet;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsCoursesDAO;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDAO;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsCoursesDao;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDao;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.main.ConsolePrinter;
 
 /**
@@ -22,22 +22,24 @@ public class FindStudents implements ControllerCommand {
                 ╔══════════════════════════════════════════╗
                 ║Insert a course name to find it`s students║
                 ╟──────────────────────────────────────────╢
-                 in:
                  """);
-
+        PopulateDatabase.COURSES
+        .forEach(course->System.out.printf(" %s \n", course));
+        System.out.println(ConsolePrinter.SEPARATOR+" in:");
+        
         String courseName = ConsolePrinter.readLine();
         StringBuilder resultList = new StringBuilder();
-        StudentsCoursesDAO studentsCoursesDAO = FabricDAO.getStudentsCourses();
-        CachedRowSet cachedSet = studentsCoursesDAO.select(courseName);
+        StudentsCoursesDao studentsCoursesDAO = FabricDao.getStudentsCoursesDao();
+        CachedRowSet cachedSet = studentsCoursesDAO.getStudentsInCourse(courseName);
 
         resultList.append(ConsolePrinter.SEPARATOR);
         resultList.append(String.format(" %25s %s %n", "Students of", courseName));
         resultList.append(ConsolePrinter.SEPARATOR);
         while (cachedSet.next()) {
-            resultList.append(String.format(" %28s%n", cachedSet.getString("student")));
+            resultList.append(String.format(" %s%n", cachedSet.getString("student")));
         }
         System.out.println(resultList.toString());
-        ConsolePrinter.closeWindow();
+        ConsolePrinter.closeSection();
     }
 
 }

@@ -9,10 +9,10 @@ import java.util.List;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetProvider;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.pojo.StudentsCourses;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.ConnectionManager;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.pojo.StudentsCourses;
 
-public class StudentsCoursesDAO {
+public class StudentsCoursesDao {
 
     private static final String INSERT_STUDENTS_COURSES = "INSERT INTO students_courses(student_id, course_id) VALUES (?,?);";
 
@@ -66,7 +66,7 @@ public class StudentsCoursesDAO {
         }
     }
 
-    public CachedRowSet select(String courseName) throws SQLException {
+    public CachedRowSet getStudentsInCourse(String courseName) throws SQLException {
         CachedRowSet rowSet = RowSetProvider.newFactory().createCachedRowSet();
         try (Connection connection = ConnectionManager.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(SELECT_STUDENTSCOURSES)) {

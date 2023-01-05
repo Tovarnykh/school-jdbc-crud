@@ -11,13 +11,13 @@ public enum Command {
     ADD_TO_COURSE(5, new AddToCourse()), 
     REMOVE_STUDENT(6, new RemoveStudent());
     
+    private int index;
+    private ControllerCommand command;
+    
     Command(int index, ControllerCommand command) {
         this.index = index;
         this.command = command;
     }
-
-    private int index;
-    private ControllerCommand command;
 
     public int getIndex() {
         return index;

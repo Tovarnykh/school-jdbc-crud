@@ -2,7 +2,7 @@ package ua.foxminded.javaspring.tovarnykh.school_console_app.commands;
 
 import java.util.List;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.CreateTables;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.CreateTablesDao;
 
 import java.sql.SQLException;
 
@@ -15,9 +15,11 @@ public class InitializeDatabase implements ControllerCommand {
 
     private static final List<String> executableScripts = List.of("/createTableGroups.sql", "/createTableStudents.sql",
             "/createTableCourses.sql", "/createTableStudents_Courses.sql");
+    
+    private CreateTablesDao createTables = new CreateTablesDao();
 
     public void execute() throws SQLException {
-        new CreateTables().create(executableScripts);
+        createTables.create(executableScripts);
     }
 
 }

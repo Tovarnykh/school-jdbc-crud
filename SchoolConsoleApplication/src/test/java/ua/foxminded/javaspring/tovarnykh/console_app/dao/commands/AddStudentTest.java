@@ -13,9 +13,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Command;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsDAO;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsDao;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.DatabaseProperties;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDAO;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDao;
 
 class AddStudentTest {
 
@@ -24,7 +24,7 @@ class AddStudentTest {
     @BeforeAll
     static void setUp() throws SQLException, ClassNotFoundException {
         Class.forName("org.h2.Driver");
-        DatabaseProperties.readPropertyFile("application.properties");
+        DatabaseProperties.readPropertyFile();
         connection = DriverManager.getConnection(DatabaseProperties.getDriver(), DatabaseProperties.getUserName(),
                 DatabaseProperties.getPassword());
         Command.INIT.getCommand().execute();
@@ -38,7 +38,7 @@ class AddStudentTest {
 
     @Test
     void execute_CheckIsStudentWasAdd_True() throws SQLException, ClassNotFoundException {
-        StudentsDAO studentDAO = FabricDAO.getStudents();
+        StudentsDao studentDAO = FabricDao.getStudentsDao();
         studentDAO.insert(1, "Adam", "Adamson");
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery("SELECT student_id FROM students WHERE student_id = 201");

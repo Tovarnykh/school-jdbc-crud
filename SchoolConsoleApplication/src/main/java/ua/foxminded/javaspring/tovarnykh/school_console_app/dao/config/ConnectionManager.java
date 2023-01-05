@@ -11,6 +11,10 @@ import java.sql.SQLException;
  * @since 0.1.0
  */
 public class ConnectionManager {
+    
+    private ConnectionManager() {
+
+    }
 
     /**
      * Method name: getConnection
@@ -24,10 +28,6 @@ public class ConnectionManager {
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DatabaseProperties.getDriver(), DatabaseProperties.getUserName(),
                 DatabaseProperties.getPassword());
-    }
-
-    private ConnectionManager() {
-
     }
 
 }

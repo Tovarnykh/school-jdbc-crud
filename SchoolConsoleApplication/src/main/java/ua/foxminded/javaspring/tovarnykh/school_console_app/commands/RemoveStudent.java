@@ -2,8 +2,8 @@ package ua.foxminded.javaspring.tovarnykh.school_console_app.commands;
 
 import java.sql.SQLException;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsCoursesDAO;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDAO;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsCoursesDao;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDao;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.main.ConsolePrinter;
 
 /**
@@ -24,10 +24,10 @@ public class RemoveStudent implements ControllerCommand {
                  """);
         int studentId = ConsolePrinter.readNumber();
         int groupId = ConsolePrinter.readNumber();
-        StudentsCoursesDAO studentsCoursesDAO = FabricDAO.getStudentsCourses();
+        StudentsCoursesDao studentsCoursesDAO = FabricDao.getStudentsCoursesDao();
 
         studentsCoursesDAO.delete(studentId, groupId);
-        ConsolePrinter.closeWindow();
+        ConsolePrinter.closeSection();
     }
 
 }

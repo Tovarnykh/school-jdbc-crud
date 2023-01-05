@@ -12,9 +12,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Command;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.GroupsDAO;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.GroupsDao;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.DatabaseProperties;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDAO;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDao;
 
 class FindGroupTest {
 
@@ -23,7 +23,7 @@ class FindGroupTest {
     @BeforeAll
     static void setUp() throws SQLException, ClassNotFoundException {
         Class.forName("org.h2.Driver");
-        DatabaseProperties.readPropertyFile("application.properties");
+        DatabaseProperties.readPropertyFile();
         connection = DriverManager.getConnection(DatabaseProperties.getDriver(), DatabaseProperties.getUserName(),
                 DatabaseProperties.getPassword());
         Command.INIT.getCommand().execute();
@@ -37,8 +37,8 @@ class FindGroupTest {
 
     @Test
     void execute_CheckIfAnyGroupsWereFound_True() throws Exception {
-        GroupsDAO groupsDAO = FabricDAO.getGroups();
-        CachedRowSet cachedRowSet = groupsDAO.select(1);
+        GroupsDao groupsDAO = FabricDao.getGroupsDao();
+        CachedRowSet cachedRowSet = groupsDAO.getStudentsAmountInGroups(1);
         assertTrue(cachedRowSet.next());
     }
 

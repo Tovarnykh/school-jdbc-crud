@@ -2,8 +2,8 @@ package ua.foxminded.javaspring.tovarnykh.school_console_app.commands;
 
 import java.sql.SQLException;
 
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsDAO;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDAO;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsDao;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDao;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.main.ConsolePrinter;
 
 /**
@@ -29,12 +29,12 @@ public class AddStudent implements ControllerCommand {
         String lastName = ConsolePrinter.readLine();
 
         try {
-            StudentsDAO studentDAO = FabricDAO.getStudents();
+            StudentsDao studentDAO = FabricDao.getStudentsDao();
             studentDAO.insert(groupId, firstName, lastName);
         } catch (SQLException e) {
             System.out.println("Incorrect data in Input");
         }
-        ConsolePrinter.closeWindow();
+        ConsolePrinter.closeSection();
     }
 
 }

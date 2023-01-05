@@ -11,7 +11,7 @@ import javax.sql.rowset.RowSetProvider;
 
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.ConnectionManager;
 
-public class GroupsDAO {
+public class GroupsDao {
 
     private static final String INSERT_GROUPS = "INSERT INTO groups (group_name) VALUES (?);";
 
@@ -37,7 +37,7 @@ public class GroupsDAO {
         }
     }
 
-    public CachedRowSet select(int amountOfStudents) throws SQLException {
+    public CachedRowSet getStudentsAmountInGroups(int amountOfStudents) throws SQLException {
         CachedRowSet rowSet = RowSetProvider.newFactory().createCachedRowSet();
         try (Connection connection = ConnectionManager.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(SELECT_GROUPS)) {

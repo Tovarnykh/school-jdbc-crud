@@ -13,12 +13,12 @@ import org.apache.ibatis.jdbc.ScriptRunner;
 
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.ConnectionManager;
 
-public class CreateTables {
+public class CreateTablesDao {
 
     public void create(List<String> scripts) {
         scripts.forEach(script -> {
             try (Connection connection = ConnectionManager.getConnection();
-                    InputStream inputStream = CreateTables.class.getResourceAsStream(script);
+                    InputStream inputStream = CreateTablesDao.class.getResourceAsStream(script);
                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                 ScriptRunner scriptRunner = new ScriptRunner(connection);
 

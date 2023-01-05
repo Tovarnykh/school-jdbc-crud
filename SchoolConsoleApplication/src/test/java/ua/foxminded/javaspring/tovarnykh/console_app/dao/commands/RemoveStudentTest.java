@@ -13,10 +13,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import ua.foxminded.javaspring.tovarnykh.school_console_app.commands.Command;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsCoursesDAO;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsDAO;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsCoursesDao;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.StudentsDao;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.DatabaseProperties;
-import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDAO;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDao;
 
 class RemoveStudentTest {
 
@@ -25,7 +25,7 @@ class RemoveStudentTest {
     @BeforeAll
     static void setUp() throws SQLException, ClassNotFoundException {
         Class.forName("org.h2.Driver");
-        DatabaseProperties.readPropertyFile("application.properties");
+        DatabaseProperties.readPropertyFile();
         connection = DriverManager.getConnection(DatabaseProperties.getDriver(), DatabaseProperties.getUserName(),
                 DatabaseProperties.getPassword());
         Command.INIT.getCommand().execute();
@@ -39,8 +39,8 @@ class RemoveStudentTest {
 
     @Test
     void execute_CheckIsStudentWasRemovedFromCourse_False() throws Exception {
-        StudentsDAO studentDAO = FabricDAO.getStudents();
-        StudentsCoursesDAO studentsCoursesDAO = new StudentsCoursesDAO();
+        StudentsDao studentDAO = FabricDao.getStudentsDao();
+        StudentsCoursesDao studentsCoursesDAO = new StudentsCoursesDao();
 
         studentDAO.insert(1, "Adam", "Adamson");
         studentsCoursesDAO.insert(201, 1);

@@ -1,4 +1,4 @@
-package ua.foxminded.javaspring.tovarnykh.school_console_app.commands.pojo;
+package ua.foxminded.javaspring.tovarnykh.school_console_app.dao.pojo;
 
 public class Student {
 

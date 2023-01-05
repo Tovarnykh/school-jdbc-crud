@@ -13,6 +13,7 @@ import java.util.Properties;
 public class DatabaseProperties {
 
     private static final Properties DATABASE_PROPERTIES = new Properties();
+    private static final String propertyFileName = "application.properties";
 
     private DatabaseProperties() {
 
@@ -51,9 +52,9 @@ public class DatabaseProperties {
         return DATABASE_PROPERTIES.getProperty("password");
     }
 
-    public static void readPropertyFile(String fileName) {
+    public static void readPropertyFile() {
         try {
-            InputStream inputStream = DatabaseProperties.class.getClassLoader().getResourceAsStream(fileName);
+            InputStream inputStream = DatabaseProperties.class.getClassLoader().getResourceAsStream(propertyFileName);
             DATABASE_PROPERTIES.load(inputStream);
         } catch (InvalidPropertiesFormatException e) {
             System.out.println("Problem with a property variable trying to receive.");

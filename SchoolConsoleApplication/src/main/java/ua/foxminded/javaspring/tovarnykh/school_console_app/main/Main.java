@@ -19,7 +19,7 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
-            DatabaseProperties.readPropertyFile("application.properties");
+            DatabaseProperties.readPropertyFile();
             ConsolePrinter console = new ConsolePrinter();
             console.exerciseChooser();
         } catch (SQLException e) {
