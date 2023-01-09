@@ -22,11 +22,16 @@ public class RemoveStudent implements ControllerCommand {
                 ╟──────────────────────────────────────────╢
                  in:
                  """);
+        
+        try {
         int studentId = ConsolePrinter.readNumber();
         int groupId = ConsolePrinter.readNumber();
         StudentsCoursesDao studentsCoursesDAO = FabricDao.getStudentsCoursesDao();
 
         studentsCoursesDAO.delete(studentId, groupId);
+        } catch (NumberFormatException|SQLException e) {
+            System.out.println("Incorrect data in Input");
+        }
         ConsolePrinter.closeSection();
     }
 

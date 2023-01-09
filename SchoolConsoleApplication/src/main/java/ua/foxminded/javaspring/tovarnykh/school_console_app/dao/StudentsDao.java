@@ -40,7 +40,7 @@ public class StudentsDao {
                         preparedStatement.setInt(1, student.getGroupId());
                     }
                     preparedStatement.setString(2, student.getFirstName());
-                    preparedStatement.setString(3, student.getSecondName());
+                    preparedStatement.setString(3, student.getLastName());
                     preparedStatement.addBatch();
                 } catch (NumberFormatException e) {
                     e.printStackTrace();

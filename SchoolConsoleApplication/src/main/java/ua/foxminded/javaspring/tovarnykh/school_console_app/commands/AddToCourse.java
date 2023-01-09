@@ -17,13 +17,14 @@ public class AddToCourse implements ControllerCommand {
                 ╟──────────────────────────────────────────╢
                  in:
                  """);
-        int studentId = ConsolePrinter.readNumber();
-        int courseId = ConsolePrinter.readNumber();
-
+        
         try {
+            int studentId = ConsolePrinter.readNumber();
+            int courseId = ConsolePrinter.readNumber();
+            
             StudentsCoursesDao studentsCoursesDAO = FabricDao.getStudentsCoursesDao();
             studentsCoursesDAO.insert(studentId, courseId);
-        } catch (SQLException e) {
+        } catch (NumberFormatException|SQLException e) {
             System.out.println("Incorrect data in Input");
         }
         ConsolePrinter.closeSection();

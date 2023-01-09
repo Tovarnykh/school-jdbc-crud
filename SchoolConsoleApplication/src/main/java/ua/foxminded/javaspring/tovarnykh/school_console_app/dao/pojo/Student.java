@@ -4,16 +4,21 @@ public class Student {
 
     private int groupId;
     private String firstName;
-    private String secondName;
+    private String lastName;
 
     public Student() {
 
+    }
+    
+    public Student(String first_name, String second_name) {
+        this.firstName = first_name;
+        this.lastName = second_name;
     }
 
     public Student(int group_id, String first_name, String second_name) {
         this.groupId = group_id;
         this.firstName = first_name;
-        this.secondName = second_name;
+        this.lastName = second_name;
     }
 
     public int getGroupId() {
@@ -32,12 +37,12 @@ public class Student {
         this.firstName = first_name;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSecondName(String second_name) {
-        this.secondName = second_name;
+    public void setLastName(String second_name) {
+        this.lastName = second_name;
     }
 
 }

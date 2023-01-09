@@ -38,7 +38,8 @@ public class ConsolePrinter {
      *                      by chosen number.
      */
     public void exerciseChooser() throws SQLException {
-        String choice;
+        String choice = "";
+
         do {
             System.out.print("""
                     ╔═════════════════════════════════════════╗
@@ -46,7 +47,7 @@ public class ConsolePrinter {
                     ║   Choose command To Interact with DB    ║
                     ╠─────────────────────────────────────────╣
                     ║1 - Find all groups with                 ║
-                    ║    more or equal students’ number.      ║
+                    ║    less or equal students’ number.      ║
                     ║2 - Find all students related to         ║
                     ║    the course with the given name.      ║
                     ║3 - Add a new student.                   ║
@@ -59,12 +60,15 @@ public class ConsolePrinter {
                     ╚═════════════════════════════════════════╝
                     """);
 
-            choice = readLine();
-
-            if (choice.chars().allMatch(Character::isDigit) && !choice.isEmpty()) {
-                CommandProvider.commandByCode.get(Integer.valueOf(choice)).execute();
-            } else if (EXIT.equalsIgnoreCase(choice)) {
-                break;
+            try {
+                choice = readLine();
+                if ((choice.chars().allMatch(Character::isDigit)) && (!choice.isEmpty())) {
+                    CommandProvider.commandByCode.get(Integer.valueOf(choice)).execute();
+                } else if (EXIT.equalsIgnoreCase(choice)) {
+                    break;
+                }
+            } catch (NullPointerException e) {
+                System.out.println("Such command does not exist");
             }
         } while (!EXIT.equalsIgnoreCase(choice));
         in.close();

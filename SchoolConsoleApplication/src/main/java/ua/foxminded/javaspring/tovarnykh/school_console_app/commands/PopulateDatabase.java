@@ -2,9 +2,12 @@ package ua.foxminded.javaspring.tovarnykh.school_console_app.commands;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.CoursesDao;
@@ -27,6 +30,8 @@ public class PopulateDatabase implements ControllerCommand {
     public static List<String> groups = new ArrayList<>();
 
     private final int STUDENTS_TO_GENERATE = 200;
+    private final int MIN_GROUP_SIZE = 10;
+    private final int MAX_GROUP_SIZE = 30;
 
     private final List<String> FIRST_NAMES = List.of("Liam", "Olivia", "Noah", "Emma", "Oliver", "Charlotte", "Elijah",
             "Amelia", "James", "Ava", "William", "Sophia", "Benjamin", "Isabella", "Lucas", "Mia", "Henry", "Evelyn",
@@ -71,29 +76,82 @@ public class PopulateDatabase implements ControllerCommand {
 
     private List<Student> generateStudents() {
         List<Student> students = new ArrayList<>();
-        String firstName;
-        String secondName;
-        int groupId;
+        AtomicInteger groupIndex = new AtomicInteger(1);
+        int[] studentsInGroup = generateGroupsSize();
+        int enrolledStudents = Arrays.stream(studentsInGroup).sum();
+        
+        if(enrolledStudents < STUDENTS_TO_GENERATE) {
+            IntStream.range(enrolledStudents, STUDENTS_TO_GENERATE)
+            .forEach(studentId -> {
+                String firstName = FIRST_NAMES.stream()
+                        .skip(random.nextInt(FIRST_NAMES.size()))
+                        .findFirst()
+                        .get();
+                String secondName = LAST_NAMES.stream()
+                        .skip(random.nextInt(FIRST_NAMES.size()))
+                        .findFirst()
+                        .get();
 
-        for (int i = 0; i < STUDENTS_TO_GENERATE; i++) {
-            groupId = random.nextInt(1, groups.size() + 2);
-            firstName = FIRST_NAMES.stream()
-                    .skip(random.nextInt(FIRST_NAMES.size()))
-                    .findFirst()
-                    .get();
-            secondName = LAST_NAMES.stream()
-                    .skip(random.nextInt(FIRST_NAMES.size()))
-                    .findFirst()
-                    .get();
-
-            Student student = new Student();
-            student.setGroupId(groupId);
-            student.setFirstName(firstName);
-            student.setSecondName(secondName);
-            
-            students.add(student);
+                Student student = new Student();
+                student.setGroupId(11);
+                student.setFirstName(firstName);
+                student.setLastName(secondName);
+                
+                students.add(student);
+            });
         }
+        
+        Arrays.stream(studentsInGroup).forEach(groupSize ->{
+            for(int i = 0; i<groupSize; i++) {
+                int groupId = groupIndex.get();
+                String firstName = FIRST_NAMES.stream()
+                        .skip(random.nextInt(FIRST_NAMES.size()))
+                        .findFirst()
+                        .get();
+                String secondName = LAST_NAMES.stream()
+                        .skip(random.nextInt(FIRST_NAMES.size()))
+                        .findFirst()
+                        .get();
+
+                Student student = new Student();
+                student.setGroupId(groupId);
+                student.setFirstName(firstName);
+                student.setLastName(secondName);
+                
+                students.add(student);
+            }
+            groupIndex.getAndIncrement();
+        });
+
+        
         return students;
+    }
+    
+    private int[] generateGroupsSize() {
+        int[] numberStudentInGroups = new int[10];
+        int studentsToEnroll = STUDENTS_TO_GENERATE;
+        
+        List<Integer> variantSizes = Stream.iterate(0, n -> n + 1)
+                .limit(MAX_GROUP_SIZE)
+                .filter(n -> n == 0 || n > MIN_GROUP_SIZE)
+                .collect(Collectors.toList());
+        
+        for (int i = 0; i < numberStudentInGroups.length; i++) {
+            if (studentsToEnroll > 10) {
+                numberStudentInGroups[i] = variantSizes
+                        .get(random.nextInt(variantSizes.size()));
+            } else {
+                numberStudentInGroups[i] = 0;
+            }
+            studentsToEnroll -= numberStudentInGroups[i];
+        }
+        
+        if(Arrays.stream(numberStudentInGroups)
+                .anyMatch(groupSize -> groupSize==0)) {
+            numberStudentInGroups = generateGroupsSize();
+        }
+        
+        return numberStudentInGroups;
     }
 
     private List<StudentsCourses> generateStudentsCourses() {

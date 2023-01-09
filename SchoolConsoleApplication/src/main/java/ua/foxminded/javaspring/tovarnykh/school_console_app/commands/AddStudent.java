@@ -18,20 +18,22 @@ public class AddStudent implements ControllerCommand {
     public void execute() {
         System.out.print("""
                 ╔══════════════════════════════════════════╗
-                ║Insert: group id, first name and last_name║
-                ║              to add student.             ║
+                ║Insert: > group id,                       ║
+                ║        > first name,                     ║
+                ║        > last_name                       ║
+                ║        to add student.                   ║
                 ╟──────────────────────────────────────────╢
                  in:
                  """);
 
-        int groupId = ConsolePrinter.readNumber();
-        String firstName = ConsolePrinter.readLine();
-        String lastName = ConsolePrinter.readLine();
-
         try {
+            int groupId = ConsolePrinter.readNumber();
+            String firstName = ConsolePrinter.readLine();
+            String lastName = ConsolePrinter.readLine();
+            
             StudentsDao studentDAO = FabricDao.getStudentsDao();
             studentDAO.insert(groupId, firstName, lastName);
-        } catch (SQLException e) {
+        } catch (NumberFormatException|SQLException e) {
             System.out.println("Incorrect data in Input");
         }
         ConsolePrinter.closeSection();

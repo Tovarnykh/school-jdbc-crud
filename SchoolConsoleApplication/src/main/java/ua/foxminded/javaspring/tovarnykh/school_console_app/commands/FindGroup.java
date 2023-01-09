@@ -1,11 +1,11 @@
 package ua.foxminded.javaspring.tovarnykh.school_console_app.commands;
 
 import java.sql.SQLException;
-
-import javax.sql.rowset.CachedRowSet;
+import java.util.List;
 
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.GroupsDao;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.fabric.FabricDao;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.pojo.Group;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.main.ConsolePrinter;
 
 /**
@@ -18,6 +18,8 @@ public class FindGroup implements ControllerCommand {
 
     @Override
     public void execute() throws SQLException {
+        int amountOfStudents = 0;
+        
         System.out.print("""
                 ╔════════════════════════════════════════╗
                 ║Insert a number of students` to find    ║
@@ -25,21 +27,24 @@ public class FindGroup implements ControllerCommand {
                 ╟────────────────────────────────────────╢
                  in:
                  """);
-
-        int amountOfStudents = ConsolePrinter.readNumber();
+        
+        try {
+        amountOfStudents = ConsolePrinter.readNumber();
         StringBuilder resultList = new StringBuilder();
         GroupsDao groupsDAO = FabricDao.getGroupsDao();
-        CachedRowSet cachedSet = groupsDAO.getStudentsAmountInGroups(amountOfStudents);
+        List<Group> groups = groupsDAO.getStudentsAmountInGroups(amountOfStudents);
 
         resultList.append(ConsolePrinter.SEPARATOR);
         resultList.append(String.format(" %-20s | %13s %n", "Group name", "Students"));
         resultList.append(ConsolePrinter.SEPARATOR);
-        while (cachedSet.next()) {
-            resultList.append(String.format(" %-20s | %11d %n", cachedSet.getString("group_name"),
-                    cachedSet.getInt("inscribed_students")));
-        }
-        cachedSet.close();
+
+        groups.forEach(group -> resultList
+                .append(String.format(" %-20s | %11d %n", group.getGroupName(), group.getInscribedStudents())));
         System.out.println(resultList);
+        } catch (NumberFormatException e) {
+            System.out.println("Incorrect data in Input");
+        }
         ConsolePrinter.closeSection();
+        
     }
 }

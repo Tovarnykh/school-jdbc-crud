@@ -4,12 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.sql.rowset.CachedRowSet;
-import javax.sql.rowset.RowSetProvider;
-
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.config.ConnectionManager;
+import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.pojo.Student;
 import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.pojo.StudentsCourses;
 
 public class StudentsCoursesDao {
@@ -22,10 +21,10 @@ public class StudentsCoursesDao {
             """;
 
     private static final String SELECT_STUDENTSCOURSES = """
-            SELECT CONCAT(first_name, ' ' , last_name) AS student
-            FROM students_courses
-            JOIN students ON students.student_id = students_courses.student_id
-            JOIN courses ON courses.course_id = students_courses.course_id
+            SELECT first_name, last_name
+            FROM students_courses sc
+            JOIN students s ON s.student_id = sc.student_id
+            JOIN courses c ON c.course_id = sc.course_id
             WHERE course_name = (?)
             ORDER BY first_name
             """;
@@ -66,14 +65,17 @@ public class StudentsCoursesDao {
         }
     }
 
-    public CachedRowSet getStudentsInCourse(String courseName) throws SQLException {
-        CachedRowSet rowSet = RowSetProvider.newFactory().createCachedRowSet();
+    public List<Student> getStudentsInCourse(String courseName) throws SQLException {
         try (Connection connection = ConnectionManager.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(SELECT_STUDENTSCOURSES)) {
             preparedStatement.setString(1, courseName);
             ResultSet resultSet = preparedStatement.executeQuery();
-            rowSet.populate(resultSet);
-            return rowSet;
+            List<Student> students = new ArrayList<>();
+            
+            while (resultSet.next()) {
+                students.add(new Student(resultSet.getString("first_name"), resultSet.getString("last_name")));
+            }
+            return students;
         }
     }
 
