@@ -30,10 +30,10 @@ public class AddStudent implements ControllerCommand {
             int groupId = ConsolePrinter.readNumber();
             String firstName = ConsolePrinter.readLine();
             String lastName = ConsolePrinter.readLine();
-            
+
             StudentsDao studentDAO = FabricDao.getStudentsDao();
             studentDAO.insert(groupId, firstName, lastName);
-        } catch (NumberFormatException|SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Incorrect data in Input");
         }
         ConsolePrinter.closeSection();

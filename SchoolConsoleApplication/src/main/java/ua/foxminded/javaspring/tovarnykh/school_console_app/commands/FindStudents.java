@@ -23,7 +23,8 @@ public class FindStudents implements ControllerCommand {
                 ║Insert a course name to find it`s students║
                 ╟──────────────────────────────────────────╢
                  """);
-        PopulateDatabase.COURSES.forEach(course -> System.out.printf(" %s \n", course));
+        PopulateDatabase.COURSES
+        .forEach(course -> System.out.printf(" %s \n", course));
         System.out.println(ConsolePrinter.SEPARATOR + " in:");
 
         String courseName = ConsolePrinter.readLine();
@@ -36,10 +37,14 @@ public class FindStudents implements ControllerCommand {
         resultList.append(ConsolePrinter.SEPARATOR);
 
         students.forEach(
-                student -> resultList.append(String.format(" %s%s%n", student.getFirstName(), student.getLastName())));
+                student -> resultList
+                .append(String
+                        .format(" %s %s%n", 
+                        student.getFirstName(), 
+                        student.getLastName())));
 
         System.out.println(resultList.toString());
-        
+
         ConsolePrinter.closeSection();
     }
 

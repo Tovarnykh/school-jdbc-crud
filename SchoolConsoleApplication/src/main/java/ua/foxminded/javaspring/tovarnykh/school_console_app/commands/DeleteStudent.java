@@ -26,13 +26,12 @@ public class DeleteStudent implements ControllerCommand {
         try {
             int studentId = ConsolePrinter.readNumber();
             StudentsDao studentDAO = FabricDao.getStudentsDao();
-            
+
             studentDAO.delete(studentId);
-        } catch (NumberFormatException|SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Incorrect data in Input");
         }
 
-        
         ConsolePrinter.closeSection();
     }
 

@@ -17,7 +17,7 @@ public class ConsolePrinter {
     public static final String SEPARATOR = " -----------------------------------------\n";
 
     private static final String EXIT = "exit";
-    private static Scanner in = new Scanner(System.in);;
+    private static Scanner in = new Scanner(System.in);
 
     /**
      * Method name: ConsoleInterface
@@ -63,14 +63,24 @@ public class ConsolePrinter {
             try {
                 choice = readLine();
                 if ((choice.chars().allMatch(Character::isDigit)) && (!choice.isEmpty())) {
-                    CommandProvider.commandByCode.get(Integer.valueOf(choice)).execute();
+                    int commandNumber = Integer.parseInt(choice);
+
+                    if ((commandNumber > 0) && (commandNumber < Command.values().length - 1)) {
+                        CommandProvider.commandByCode
+                        .get(commandNumber)
+                        .execute();
+                    } else {
+                        System.out.println("Such command is not available");
+                    }
+
                 } else if (EXIT.equalsIgnoreCase(choice)) {
                     break;
                 }
-            } catch (NullPointerException e) {
-                System.out.println("Such command does not exist");
+            } catch (NumberFormatException e) {
+                System.out.println("Bad input");
             }
         } while (!EXIT.equalsIgnoreCase(choice));
+
         in.close();
     }
 

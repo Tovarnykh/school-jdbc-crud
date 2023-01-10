@@ -11,8 +11,10 @@ import java.util.stream.Collectors;
  */
 public final class CommandProvider {
     
-    public static Map<Integer, ControllerCommand> commandByCode = Arrays.asList(Command.values()).stream()
-            .collect(Collectors.toMap(Command::getIndex, Command::getCommand));
+    public static Map<Integer, ControllerCommand> commandByCode = Arrays
+            .asList(Command.values()).stream()
+            .collect(Collectors
+                    .toMap(Command::getIndex, Command::getCommand));
     
     private CommandProvider() {
 

@@ -20,41 +20,37 @@ class StudentsDaoTest extends DatabaseTest {
         studentDAO.insert(1, "Adam", "Adamson");
         try (Statement statement = connection.createStatement();
                 ResultSet resultSet = statement
-                        .executeQuery("SELECT first_name FROM students WHERE first_name = 'Adam'")) {
+                        .executeQuery("SELECT student_id FROM students WHERE student_id = 201")) {
             assertTrue(resultSet.next());
         }
     }
 
     @Test
-    void delete_CheckIsStudentWasDelete_True() throws Exception {
+    void delete_CheckIsStudentWasDelete_False() throws Exception {
         StudentsDao studentDAO = FabricDao.getStudentsDao();
 
         studentDAO.insert(1, "Rosman", "Dty");
         studentDAO.delete(202);
         try (Statement statement = connection.createStatement();
                 ResultSet resultSet = statement
-                        .executeQuery("SELECT first_name FROM students WHERE first_name = 'Rosman'")) {
-            while (resultSet.next()) {
-                assertEquals("Rosman", resultSet.getString("first_name"));
-            }
+                        .executeQuery("SELECT student_id FROM students WHERE student_id = 202")) {
 
+            assertFalse(resultSet.next());
         }
     }
 
     @Test
-    void delete_CheckIsStudentWasDeleteEnrolledToCourse_True() throws Exception {
+    void delete_CheckIsStudentWasDeleteEnrolledToCourse_False() throws Exception {
         StudentsDao studentDAO = FabricDao.getStudentsDao();
         StudentsCoursesDao studentsCoursesDAO = new StudentsCoursesDao();
 
         studentDAO.insert(1, "Brand", "Dend");
         studentsCoursesDAO.insert(201, 1);
-        studentDAO.delete(201);
+        studentDAO.delete(203);
         try (Statement statement = connection.createStatement();
                 ResultSet resultSet = statement
-                        .executeQuery("SELECT first_name FROM students WHERE first_name = 'Brand'");) {
-            while (resultSet.next()) {
-                assertEquals("Brand", resultSet.getString("first_name"));
-            }
+                        .executeQuery("SELECT student_id FROM students WHERE student_id = 203");) {
+            assertFalse(resultSet.next());
         }
     }
 

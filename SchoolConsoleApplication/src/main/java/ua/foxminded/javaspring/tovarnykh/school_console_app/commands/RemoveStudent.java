@@ -28,8 +28,9 @@ public class RemoveStudent implements ControllerCommand {
         int groupId = ConsolePrinter.readNumber();
         StudentsCoursesDao studentsCoursesDAO = FabricDao.getStudentsCoursesDao();
 
-        studentsCoursesDAO.delete(studentId, groupId);
-        } catch (NumberFormatException|SQLException e) {
+        studentsCoursesDAO
+        .delete(studentId, groupId);
+        } catch (SQLException e) {
             System.out.println("Incorrect data in Input");
         }
         ConsolePrinter.closeSection();

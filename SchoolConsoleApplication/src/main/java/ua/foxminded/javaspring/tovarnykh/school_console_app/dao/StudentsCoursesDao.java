@@ -46,8 +46,6 @@ public class StudentsCoursesDao {
                     preparedStatement.setInt(1, studentsCourses.getStudentId());
                     preparedStatement.setInt(2, studentsCourses.getCourseID());
                     preparedStatement.addBatch();
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -73,8 +71,11 @@ public class StudentsCoursesDao {
             List<Student> students = new ArrayList<>();
             
             while (resultSet.next()) {
-                students.add(new Student(resultSet.getString("first_name"), resultSet.getString("last_name")));
+                students.add(new Student(resultSet.getString("first_name"), 
+                        resultSet.getString("last_name")));
             }
+
+            resultSet.close();
             return students;
         }
     }

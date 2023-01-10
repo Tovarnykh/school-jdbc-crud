@@ -30,7 +30,5 @@ public class StudentsCourses {
     public void setStudentId(int studentId) {
         this.studentId = studentId;
     }
-    
-    
-    
+
 }

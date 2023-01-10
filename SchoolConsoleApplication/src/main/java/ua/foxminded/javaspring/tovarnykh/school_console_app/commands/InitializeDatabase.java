@@ -15,7 +15,7 @@ public class InitializeDatabase implements ControllerCommand {
 
     private static final List<String> executableScripts = List.of("/createTableGroups.sql", "/createTableStudents.sql",
             "/createTableCourses.sql", "/createTableStudents_Courses.sql");
-    
+
     private CreateTablesDao createTables = new CreateTablesDao();
 
     public void execute() throws SQLException {

@@ -9,7 +9,7 @@ public class Student {
     public Student() {
 
     }
-    
+
     public Student(String first_name, String second_name) {
         this.firstName = first_name;
         this.lastName = second_name;

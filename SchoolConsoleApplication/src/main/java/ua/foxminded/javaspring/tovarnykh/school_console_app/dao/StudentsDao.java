@@ -21,7 +21,8 @@ public class StudentsDao {
 
     public void insert(int groupId, String firstName, String lastName) throws SQLException {
         try (Connection connection = ConnectionManager.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_STUDENTS)) {
+                PreparedStatement preparedStatement = connection
+                        .prepareStatement(INSERT_STUDENTS)) {
             preparedStatement.setInt(1, groupId);
             preparedStatement.setString(2, firstName);
             preparedStatement.setString(3, lastName);
@@ -31,7 +32,8 @@ public class StudentsDao {
 
     public void insertMultiply(List<Student> list) throws SQLException {
         try (Connection connection = ConnectionManager.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_STUDENTS)) {
+                PreparedStatement preparedStatement = connection
+                        .prepareStatement(INSERT_STUDENTS)) {
             list.stream().forEach(student -> {
                 try {
                     if (student.getGroupId() > PopulateDatabase.groups.size()) {
@@ -42,8 +44,6 @@ public class StudentsDao {
                     preparedStatement.setString(2, student.getFirstName());
                     preparedStatement.setString(3, student.getLastName());
                     preparedStatement.addBatch();
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -54,7 +54,8 @@ public class StudentsDao {
 
     public void delete(int studentId) throws SQLException {
         try (Connection connection = ConnectionManager.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(DELETE_STUDENTS)) {
+                PreparedStatement preparedStatement = connection
+                        .prepareStatement(DELETE_STUDENTS)) {
             preparedStatement.setInt(1, studentId);
             preparedStatement.executeUpdate();
         }

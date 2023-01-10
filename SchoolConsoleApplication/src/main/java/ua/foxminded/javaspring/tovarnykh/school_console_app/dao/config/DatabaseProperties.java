@@ -54,7 +54,9 @@ public class DatabaseProperties {
 
     public static void readPropertyFile() {
         try {
-            InputStream inputStream = DatabaseProperties.class.getClassLoader().getResourceAsStream(propertyFileName);
+            InputStream inputStream = DatabaseProperties.class
+                    .getClassLoader()
+                    .getResourceAsStream(propertyFileName);
             DATABASE_PROPERTIES.load(inputStream);
         } catch (InvalidPropertiesFormatException e) {
             System.out.println("Problem with a property variable trying to receive.");

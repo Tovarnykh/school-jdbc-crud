@@ -19,7 +19,7 @@ public class FindGroup implements ControllerCommand {
     @Override
     public void execute() throws SQLException {
         int amountOfStudents = 0;
-        
+
         System.out.print("""
                 ╔════════════════════════════════════════╗
                 ║Insert a number of students` to find    ║
@@ -27,8 +27,7 @@ public class FindGroup implements ControllerCommand {
                 ╟────────────────────────────────────────╢
                  in:
                  """);
-        
-        try {
+
         amountOfStudents = ConsolePrinter.readNumber();
         StringBuilder resultList = new StringBuilder();
         GroupsDao groupsDAO = FabricDao.getGroupsDao();
@@ -39,12 +38,11 @@ public class FindGroup implements ControllerCommand {
         resultList.append(ConsolePrinter.SEPARATOR);
 
         groups.forEach(group -> resultList
-                .append(String.format(" %-20s | %11d %n", group.getGroupName(), group.getInscribedStudents())));
+                .append(String.format(" %-20s | %11d %n", 
+                        group.getGroupName(), 
+                        group.getInscribedStudents())));
         System.out.println(resultList);
-        } catch (NumberFormatException e) {
-            System.out.println("Incorrect data in Input");
-        }
         ConsolePrinter.closeSection();
-        
+
     }
 }

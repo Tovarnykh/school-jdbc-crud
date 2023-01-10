@@ -18,7 +18,8 @@ public class CreateTablesDao {
     public void create(List<String> scripts) {
         scripts.forEach(script -> {
             try (Connection connection = ConnectionManager.getConnection();
-                    InputStream inputStream = CreateTablesDao.class.getResourceAsStream(script);
+                    InputStream inputStream = CreateTablesDao.class
+                            .getResourceAsStream(script);
                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                 ScriptRunner scriptRunner = new ScriptRunner(connection);
 

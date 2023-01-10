@@ -24,9 +24,9 @@ import ua.foxminded.javaspring.tovarnykh.school_console_app.dao.pojo.StudentsCou
  * @since 0.1.0
  */
 public class PopulateDatabase implements ControllerCommand {
-    
-    public static final List<String> COURSES = List.of("Mathematics", "Science", "Language Arts", "Health", "Handwriting",
-            "Physical Education", "Art", "Music", "Instrumental Music", "Dance");
+
+    public static final List<String> COURSES = List.of("Mathematics", "Science", "Language Arts", "Health",
+            "Handwriting", "Physical Education", "Art", "Music", "Instrumental Music", "Dance");
     public static List<String> groups = new ArrayList<>();
 
     private final int STUDENTS_TO_GENERATE = 200;
@@ -79,15 +79,16 @@ public class PopulateDatabase implements ControllerCommand {
         AtomicInteger groupIndex = new AtomicInteger(1);
         int[] studentsInGroup = generateGroupsSize();
         int enrolledStudents = Arrays.stream(studentsInGroup).sum();
-        
-        if(enrolledStudents < STUDENTS_TO_GENERATE) {
-            IntStream.range(enrolledStudents, STUDENTS_TO_GENERATE)
-            .forEach(studentId -> {
-                String firstName = FIRST_NAMES.stream()
+
+        if (enrolledStudents < STUDENTS_TO_GENERATE) {
+            IntStream.range(enrolledStudents, STUDENTS_TO_GENERATE).forEach(studentId -> {
+                String firstName = FIRST_NAMES
+                        .stream()
                         .skip(random.nextInt(FIRST_NAMES.size()))
                         .findFirst()
                         .get();
-                String secondName = LAST_NAMES.stream()
+                String secondName = LAST_NAMES
+                        .stream()
                         .skip(random.nextInt(FIRST_NAMES.size()))
                         .findFirst()
                         .get();
@@ -96,19 +97,21 @@ public class PopulateDatabase implements ControllerCommand {
                 student.setGroupId(11);
                 student.setFirstName(firstName);
                 student.setLastName(secondName);
-                
+
                 students.add(student);
             });
         }
-        
-        Arrays.stream(studentsInGroup).forEach(groupSize ->{
-            for(int i = 0; i<groupSize; i++) {
+
+        Arrays.stream(studentsInGroup).forEach(groupSize -> {
+            for (int i = 0; i < groupSize; i++) {
                 int groupId = groupIndex.get();
-                String firstName = FIRST_NAMES.stream()
+                String firstName = FIRST_NAMES
+                        .stream()
                         .skip(random.nextInt(FIRST_NAMES.size()))
                         .findFirst()
                         .get();
-                String secondName = LAST_NAMES.stream()
+                String secondName = LAST_NAMES
+                        .stream()
                         .skip(random.nextInt(FIRST_NAMES.size()))
                         .findFirst()
                         .get();
@@ -117,25 +120,24 @@ public class PopulateDatabase implements ControllerCommand {
                 student.setGroupId(groupId);
                 student.setFirstName(firstName);
                 student.setLastName(secondName);
-                
+
                 students.add(student);
             }
             groupIndex.getAndIncrement();
         });
 
-        
         return students;
     }
-    
+
     private int[] generateGroupsSize() {
         int[] numberStudentInGroups = new int[10];
         int studentsToEnroll = STUDENTS_TO_GENERATE;
-        
+
         List<Integer> variantSizes = Stream.iterate(0, n -> n + 1)
                 .limit(MAX_GROUP_SIZE)
                 .filter(n -> n == 0 || n > MIN_GROUP_SIZE)
                 .collect(Collectors.toList());
-        
+
         for (int i = 0; i < numberStudentInGroups.length; i++) {
             if (studentsToEnroll > 10) {
                 numberStudentInGroups[i] = variantSizes
@@ -145,12 +147,12 @@ public class PopulateDatabase implements ControllerCommand {
             }
             studentsToEnroll -= numberStudentInGroups[i];
         }
-        
-        if(Arrays.stream(numberStudentInGroups)
-                .anyMatch(groupSize -> groupSize==0)) {
+
+        if (Arrays.stream(numberStudentInGroups)
+                .anyMatch(groupSize -> groupSize == 0)) {
             numberStudentInGroups = generateGroupsSize();
         }
-        
+
         return numberStudentInGroups;
     }
 
@@ -172,7 +174,7 @@ public class PopulateDatabase implements ControllerCommand {
 
                 if (!(numbers.contains(generatedCourse))) {
                     numbers.add(generatedCourse);
-                    
+
                     StudentsCourses record = new StudentsCourses();
                     record.setStudentId(studentId);
                     record.setCourseID(numbers.get(iterator.getAndIncrement()));

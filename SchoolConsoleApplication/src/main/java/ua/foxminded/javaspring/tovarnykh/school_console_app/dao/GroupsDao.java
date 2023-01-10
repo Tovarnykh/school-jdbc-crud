@@ -42,10 +42,13 @@ public class GroupsDao {
             preparedStatement.setInt(1, amountOfStudents);
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Group> groups = new ArrayList<>();
-            
+
             while (resultSet.next()) {
-                groups.add(new Group(resultSet.getString("group_name"), resultSet.getInt("inscribed_students")));
+                groups.add(new Group(resultSet.getString("group_name"), 
+                        resultSet.getInt("inscribed_students")));
             }
+
+            resultSet.close();
             return groups;
         }
     }

@@ -11,7 +11,7 @@ import java.sql.SQLException;
  * @since 0.1.0
  */
 public class ConnectionManager {
-    
+
     private ConnectionManager() {
 
     }
