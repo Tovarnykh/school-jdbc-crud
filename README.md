@@ -1,16 +1,6 @@
 # Console Application
 
-This project it is a part of **foxminded** education course.
-
-It consists of 6 tasks.
-* Plain JDBC Console Application
-* Spring Boot JDBC Api
-* Service layer
-* Console menu
-* Hibernate
-* Spring Data JPA
-
-## Task 2.1 Plain JDBC Console Application
+## Plain JDBC Console Application
 ### Assignment
 
 1. Create SQL files with data:
